@@ -11,6 +11,8 @@ private:
 public:
     Vector2f();
 
+    Vector2f(float x, float y);
+
     ~Vector2f();
 
     Vector2f operator-(const Vector2f &);
