@@ -27,7 +27,7 @@ public:
 
     void normalize();
 
-    void reflect(Vector2f normal);
+    Vector2f reflect(Vector2f normal);
 };
 
 #endif //BREAK_THE_BRICKS_UTIL_H

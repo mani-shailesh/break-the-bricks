@@ -37,3 +37,8 @@ float Vector2f::dot(const Vector2f &other) {
     float dot_product = x * other.x + y * other.y;
     return dot_product;
 }
+
+Vector2f Vector2f::reflect(Vector2f normal) {
+    normal.normalize();
+    return *this - normal * (2 * this->dot(normal));
+}

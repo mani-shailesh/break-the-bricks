@@ -56,9 +56,9 @@ void Ball::draw() {
 void Ball::update(Vector2f left_bottom, Vector2f right_top) {
     _pos = _pos + _velocity;
     if (_pos.get_x() + _radius >= right_top.get_x())
-        _velocity.reflect(Vector2f(-1, 0));
+        _velocity = _velocity.reflect(Vector2f(-1, 0));
     if (_pos.get_x() - _radius <= left_bottom.get_x())
-        _velocity.reflect(Vector2f(1, 0));
-    if (_pos.get_x() + _radius >= right_top.get_y())
-        _velocity.reflect(Vector2f(0, -1));
+        _velocity = _velocity.reflect(Vector2f(1, 0));
+    if (_pos.get_y() + _radius >= right_top.get_y())
+        _velocity = _velocity.reflect(Vector2f(0, -1));
 }
