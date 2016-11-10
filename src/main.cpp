@@ -34,6 +34,8 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
     if (height == 0) height = 1;                // To prevent divide by 0
     GLfloat aspect = (GLfloat) width / (GLfloat) height;
 
+    GLfloat clip_x_left, clip_x_right, clip_y_bottom, clip_y_top;
+
     // Set the viewport to cover the new window
     glViewport(0, 0, width, height);
 
@@ -41,12 +43,18 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
     glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
     glLoadIdentity();             // Reset the projection matrix
     if (width >= height) {
-        // aspect >= 1, set the height from -1 to 1, with larger width
-        gluOrtho2D(-1.0 * aspect, 1.0 * aspect, -1.0, 1.0);
+        clip_x_left = -1.0f * aspect;
+        clip_x_right = 1.0f * aspect;
+        clip_y_bottom = -1.0f;
+        clip_y_top = 1.0f;
     } else {
-        // aspect < 1, set the width to -1 to 1, with larger height
-        gluOrtho2D(-1.0, 1.0, -1.0 / aspect, 1.0 / aspect);
+        clip_x_left = -1.0f;
+        clip_x_right = 1.0f;
+        clip_y_bottom = -1.0f / aspect;
+        clip_y_top = 1.0f / aspect;
     }
+    gluOrtho2D(clip_x_left, clip_x_right, clip_y_bottom, clip_y_top);
+    game.reshape(Vector2f(clip_x_left, clip_y_bottom), Vector2f(clip_x_right, clip_y_top));
 }
 
 /* Called back when the timer expired */

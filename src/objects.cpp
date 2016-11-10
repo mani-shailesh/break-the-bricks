@@ -48,17 +48,17 @@ void Ball::draw() {
     GLfloat angle;
     for (int i = 0; i <= numSegments; i++) { // Last vertex same as first vertex
         angle = i * 2.0f * PI / numSegments;  // 360 deg for all segments
-        glVertex2f(cos(angle) * _radius, sin(angle) * _radius);
+        glVertex2f(cosf(angle) * _radius, sinf(angle) * _radius);
     }
     glEnd();
 }
 
 void Ball::update(Vector2f left_bottom, Vector2f right_top) {
     _pos = _pos + _velocity;
-    if (_pos.get_x() >= right_top.get_x())
+    if (_pos.get_x() + _radius >= right_top.get_x())
         _velocity.reflect(Vector2f(-1, 0));
-    if (_pos.get_x() <= left_bottom.get_x())
+    if (_pos.get_x() - _radius <= left_bottom.get_x())
         _velocity.reflect(Vector2f(1, 0));
-    if (_pos.get_x() >= right_top.get_y())
+    if (_pos.get_x() + _radius >= right_top.get_y())
         _velocity.reflect(Vector2f(0, -1));
 }
