@@ -1,5 +1,5 @@
 //
-// Created by shailesh on 11/10/16.
+//  Contains declarations for GameObjects.
 //
 
 #ifndef BREAK_THE_BRICKS_OBJECTS_H

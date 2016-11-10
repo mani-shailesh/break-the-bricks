@@ -1,5 +1,5 @@
 //
-// Created by shailesh on 11/10/16.
+// Contains declarations for utility classes.
 //
 
 #ifndef BREAK_THE_BRICKS_UTIL_H
