@@ -8,6 +8,13 @@ using namespace std;
 
 Game::Game() {
     _paused = true;
+    _left_bottom = Vector2f(-1, -1);
+    _right_top = Vector2f(1, 1);
+}
+
+void Game::reshape(Vector2f left_bottom, Vector2f right_top) {
+    _left_bottom = left_bottom;
+    _right_top = right_top;
 }
 
 Game::~Game() {
@@ -42,7 +49,7 @@ void Game::update() {
         return;
     vector<GameObject *>::iterator it;
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
-        (*it)->update();
+        (*it)->update(_left_bottom, _right_top);
     }
 }
 

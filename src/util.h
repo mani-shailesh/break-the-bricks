@@ -26,6 +26,8 @@ public:
     float dot(const Vector2f &);
 
     void normalize();
+
+    void reflect(Vector2f normal);
 };
 
 #endif //BREAK_THE_BRICKS_UTIL_H

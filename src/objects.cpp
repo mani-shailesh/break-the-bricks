@@ -29,7 +29,7 @@ void Brick::draw() {
     );
 }
 
-void Brick::update() {}
+void Brick::update(Vector2f left_bottom, Vector2f right_top) {}
 
 
 Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
@@ -41,6 +41,7 @@ Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
 
 void Ball::draw() {
     glTranslatef(_pos.get_x(), _pos.get_y(), 0.0f);
+
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(0, 0);       // Center of circle
     int numSegments = 100;
@@ -52,6 +53,12 @@ void Ball::draw() {
     glEnd();
 }
 
-void Ball::update() {
+void Ball::update(Vector2f left_bottom, Vector2f right_top) {
     _pos = _pos + _velocity;
+    if (_pos.get_x() >= right_top.get_x())
+        _velocity.reflect(Vector2f(-1, 0));
+    if (_pos.get_x() <= left_bottom.get_x())
+        _velocity.reflect(Vector2f(1, 0));
+    if (_pos.get_x() >= right_top.get_y())
+        _velocity.reflect(Vector2f(0, -1));
 }

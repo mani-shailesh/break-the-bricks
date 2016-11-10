@@ -11,11 +11,11 @@ class GameObject {
 protected:
     Vector2f _pos;
 public:
-    GameObject(Vector2f);
+    GameObject(Vector2f pos);
 
     virtual void draw() = 0;
 
-    virtual void update() = 0;
+    virtual void update(Vector2f left_bottom, Vector2f right_top) = 0;
 };
 
 class Ball : public GameObject {
@@ -25,7 +25,7 @@ private:
 public:
     Ball(Vector2f pos, float radius, float speed);
 
-    void update();
+    void update(Vector2f left_bottom, Vector2f right_top);
 
     void draw();
 };
@@ -37,9 +37,9 @@ private:
 public:
     Brick(Vector2f pos, Vector2f size);
 
-    virtual void draw();
+    void draw();
 
-    virtual void update();
+    void update(Vector2f left_bottom, Vector2f right_top);
 
     bool check_collision(const Ball &);
 };

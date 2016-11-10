@@ -23,9 +23,12 @@ const float SPEED = 0.05;
 class Game {
 private:
     std::vector<GameObject *> _game_objects;
+    Vector2f _left_bottom, _right_top;
     bool _paused;
 public:
     Game();
+
+    void reshape(Vector2f left_bottom, Vector2f right_top);
 
     ~Game();
 
