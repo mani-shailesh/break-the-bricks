@@ -37,9 +37,9 @@ private:
 public:
     Brick(Vector2f pos, Vector2f size);
 
-    void draw();
+    virtual void draw();
 
-    void update();
+    virtual void update();
 
     bool check_collision(const Ball &);
 };

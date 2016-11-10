@@ -12,10 +12,13 @@
 const int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
 
 // constants for bricks
-const float BRICK_WIDTH = 2, BRICK_HEIGHT = 0.5;
-const float ROWS = 7;
+const float BRICK_WIDTH = 0.3, BRICK_HEIGHT = 0.1;
+const float ROWS = 5, COLUMNS = 7;
+const float GAP = 0.006;
 
 // constants for ball
+const float RADIUS = 0.05;
+const float SPEED = 0.05;
 
 class Game {
 private:
