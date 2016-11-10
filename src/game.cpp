@@ -26,6 +26,16 @@ Game::~Game() {
     }
 }
 
+void Game::reset() {
+    _paused = true;
+    while (_game_objects.size() > 0) {
+        GameObject *gameObject = _game_objects.back();
+        _game_objects.pop_back();
+        delete (gameObject);
+    }
+    setup();
+}
+
 void Game::setup() {
 
     // Adding bricks to the scene
@@ -47,7 +57,7 @@ void Game::setup() {
     _game_objects.push_back(new Platform(platform_pos, platform_size, PLATFORM_SPEED));
 
     // Adding ball to the scene
-    Vector2f pos(0, -1 + RADIUS);
+    Vector2f pos(0, platform_pos.get_y() + PLATFORM_HEIGHT / 2 + RADIUS);
     _game_objects.push_back(new Ball(pos, RADIUS, BALL_SPEED));
 }
 
@@ -80,9 +90,21 @@ void Game::key_pressed(int key) {
             _keys[RIGHT_KEY] = true;
             break;
         case ' ':
-            _keys[SPACE_KEY] = true;
+            toggle_pause();
+            break;
+        case 'r':
+        case 'R':
+            if (_keys[RESET_KEY]) {
+                reset();
+                _keys[RESET_KEY] = false;
+            } else {
+                _keys[RESET_KEY] = true;
+            }
             break;
         default:
             break;
     }
+
+    if (key != 'r' && key != 'R')
+        _keys[RESET_KEY] = false;
 }

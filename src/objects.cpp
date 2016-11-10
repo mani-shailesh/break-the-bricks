@@ -9,11 +9,13 @@
 
 #define PI 3.14159265f
 
+// Definitions for GameObject
 GameObject::GameObject(Vector2f pos) {
     _pos = pos;
 }
 
 
+// Definitions for Brick
 Brick::Brick(Vector2f pos, Vector2f size) : GameObject(pos) {
     _size = size;
     _active = true;
@@ -34,7 +36,7 @@ void Brick::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
 
 }
 
-
+// Definitions for Ball
 Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
     _radius = radius;
     _velocity = Vector2f(1, 1);
@@ -66,7 +68,7 @@ void Ball::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
         _velocity = _velocity.reflect(Vector2f(0, -1));
 }
 
-
+// Definitions for Platform
 Platform::Platform(Vector2f pos, Vector2f size, float speed) : Brick(pos, size) {
     _speed = speed;
 }

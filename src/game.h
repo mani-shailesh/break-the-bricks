@@ -18,9 +18,9 @@ private:
 public:
     Game();
 
-    void reshape(Vector2f left_bottom, Vector2f right_top);
-
     ~Game();
+
+    void reset();
 
     void setup();
 
@@ -31,6 +31,8 @@ public:
     void toggle_pause();
 
     void key_pressed(int key);
+
+    void reshape(Vector2f left_bottom, Vector2f right_top);
 };
 
 #endif //BREAK_THE_BRICKS_GAME_H

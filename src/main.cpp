@@ -68,7 +68,11 @@ void Timer(int value) {
     glutTimerFunc(REFRESH_MILI_SEC, Timer, 0); // subsequent timer call at milliseconds
 }
 
-void keyboard(int key, int x, int y) {
+void keyboard(unsigned char key, int x, int y) {
+    game.key_pressed(key);
+}
+
+void keyboard_special(int key, int x, int y) {
     game.key_pressed(key);
 }
 
@@ -84,8 +88,8 @@ int main(int argc, char **argv) {
     glutReshapeFunc(reshape);
     glutTimerFunc(0, Timer, 0);
 
-//    glutKeyboardFunc(keyboard);
-    glutSpecialFunc(keyboard);
+    glutKeyboardFunc(keyboard);
+    glutSpecialFunc(keyboard_special);
 
     init();
 
