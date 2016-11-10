@@ -23,6 +23,7 @@ Game::~Game() {
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
         delete (*it);
     }
+    delete (ball);
 }
 
 void Game::reset() {
@@ -32,7 +33,7 @@ void Game::reset() {
         _game_objects.pop_back();
         delete (gameObject);
     }
-
+    delete (ball);
 
     setup();
 }
@@ -59,7 +60,7 @@ void Game::setup() {
 
     // Adding ball to the scene
     Vector2f pos(0, platform_pos.get_y() + PLATFORM_HEIGHT / 2 + RADIUS);
-    _game_objects.push_back(new Ball(pos, RADIUS, BALL_SPEED));
+    ball = new Ball(pos, RADIUS, BALL_SPEED);
 }
 
 void Game::update() {
@@ -69,6 +70,7 @@ void Game::update() {
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
         (*it)->update(_left_bottom, _right_top, _keys);
     }
+    ball->update(_left_bottom, _right_top, _keys);
 }
 
 void Game::draw() {
@@ -76,6 +78,7 @@ void Game::draw() {
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
         (*it)->draw();
     }
+    ball->draw();
 }
 
 void Game::toggle_pause() {

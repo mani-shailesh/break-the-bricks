@@ -7,6 +7,8 @@
 
 #include "util.h"
 
+class Ball;
+
 class GameObject {
 protected:
     Vector2f _pos;
@@ -16,24 +18,45 @@ public:
     virtual void draw() = 0;
 
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys) = 0;
+
+    virtual Vector2f *get_collision_normal(const Ball &ball);
 };
 
-class Ball;
-
-class Brick : public GameObject {
-private:
-    bool _active;
+class Rectangle : public GameObject {
 protected:
     Vector2f _size;
 public:
-    Brick(Vector2f pos, Vector2f size);
+    Rectangle(Vector2f pos, Vector2f size);
 
     virtual void draw();
 
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 
-    Vector2f *get_collision_normal(const Ball &ball);
+    virtual Vector2f *get_collision_normal(const Ball &ball);
 };
+
+
+class Brick : public Rectangle {
+private:
+    bool _active;
+public:
+    Brick(Vector2f pos, Vector2f size);
+
+    Vector2f *get_collision_normal(const Ball &ball);
+
+    void draw();
+};
+
+
+class Platform : public Rectangle {
+private:
+    float _speed;
+public:
+    Platform(Vector2f pos, Vector2f size, float speed);
+
+    void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
+};
+
 
 class Ball : public GameObject {
 private:
@@ -46,16 +69,7 @@ public:
 
     void draw();
 
-    friend Vector2f *Brick::get_collision_normal(const Ball &ball);
-};
-
-class Platform : public Brick {
-private:
-    float _speed;
-public:
-    Platform(Vector2f pos, Vector2f size, float speed);
-
-    void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
+    friend Vector2f *Rectangle::get_collision_normal(const Ball &ball);
 };
 
 #endif //BREAK_THE_BRICKS_OBJECTS_H

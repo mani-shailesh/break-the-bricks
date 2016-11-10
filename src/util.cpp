@@ -15,20 +15,20 @@ Vector2f::Vector2f(float x, float y) {
     this->y = y;
 }
 
-Vector2f Vector2f::operator+(const Vector2f &other) {
+Vector2f Vector2f::operator+(const Vector2f &other) const {
     return Vector2f(x + other.x, y + other.y);
 }
 
-Vector2f Vector2f::operator-(const Vector2f &other) {
+Vector2f Vector2f::operator-(const Vector2f &other) const {
     return Vector2f(x - other.x, y - other.y);
 }
 
-Vector2f Vector2f::operator*(const float &a) {
+Vector2f Vector2f::operator*(const float &a) const {
     return Vector2f(x * a, y * a);
 }
 
 void Vector2f::normalize() {
-    float magnitude = sqrt(x * x + y * y);
+    float magnitude = norm();
     x /= magnitude;
     y /= magnitude;
 }
@@ -41,4 +41,8 @@ float Vector2f::dot(const Vector2f &other) {
 Vector2f Vector2f::reflect(Vector2f normal) {
     normal.normalize();
     return *this - normal * (2 * this->dot(normal));
+}
+
+float Vector2f::norm() {
+    return (float) sqrt(x * x + y * y);
 }
