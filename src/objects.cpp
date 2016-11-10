@@ -29,7 +29,9 @@ void Brick::draw() {
     );
 }
 
-void Brick::update(Vector2f left_bottom, Vector2f right_top) {}
+void Brick::update(Vector2f left_bottom, Vector2f right_top) {
+
+}
 
 
 Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
@@ -61,4 +63,13 @@ void Ball::update(Vector2f left_bottom, Vector2f right_top) {
         _velocity = _velocity.reflect(Vector2f(1, 0));
     if (_pos.get_y() + _radius >= right_top.get_y())
         _velocity = _velocity.reflect(Vector2f(0, -1));
+}
+
+
+Platform::Platform(Vector2f pos, Vector2f size) : Brick(pos, size) {
+
+}
+
+void Platform::update(Vector2f pos, Vector2f size) {
+
 }

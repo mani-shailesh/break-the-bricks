@@ -27,7 +27,7 @@ Game::~Game() {
 void Game::setup() {
 
     // Adding bricks to the scene
-    Vector2f init_pos(-1.0, 0.5);  // TODO: Make them dynamic based on screen size
+    Vector2f init_pos(_left_bottom.get_x(), _right_top.get_y() / 2);
 
     Vector2f size(BRICK_WIDTH, BRICK_HEIGHT);
 
@@ -38,6 +38,11 @@ void Game::setup() {
             pos = pos + Vector2f(BRICK_WIDTH + GAP, 0);
         }
     }
+
+    // Adding platform to the scene
+    Vector2f platform_pos(0, _left_bottom.get_y() + PLATFORM_HEIGHT / 2);
+    Vector2f platform_size(PLATFORM_WIDTH, PLATFORM_HEIGHT);
+    _game_objects.push_back(new Platform(platform_pos, platform_size));
 
     // Adding ball to the scene
     Vector2f pos(0, -1 + RADIUS);

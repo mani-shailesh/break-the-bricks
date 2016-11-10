@@ -37,11 +37,18 @@ private:
 public:
     Brick(Vector2f pos, Vector2f size);
 
-    void draw();
+    virtual void draw();
 
-    void update(Vector2f left_bottom, Vector2f right_top);
+    virtual void update(Vector2f left_bottom, Vector2f right_top);
 
     bool check_collision(const Ball &);
+};
+
+class Platform : public Brick {
+public:
+    Platform(Vector2f pos, Vector2f size);
+
+    void update(Vector2f left_bottom, Vector2f right_top);
 };
 
 #endif //BREAK_THE_BRICKS_OBJECTS_H

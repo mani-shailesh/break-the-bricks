@@ -8,6 +8,10 @@
 
 #define WINDOW_TITLE "Break the Bricks"
 
+
+// constants for game window
+const int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
+
 int const REFRESH_MILI_SEC = 30;
 
 Game game;

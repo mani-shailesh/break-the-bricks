@@ -8,9 +8,6 @@
 #include <vector>
 #include "objects.h"
 
-// constants for game window
-const int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
-
 // constants for bricks
 const float BRICK_WIDTH = 0.3, BRICK_HEIGHT = 0.1;
 const float ROWS = 5, COLUMNS = 7;
@@ -20,11 +17,20 @@ const float GAP = 0.006;
 const float RADIUS = 0.05;
 const float SPEED = 0.05;
 
+// constants for platform
+const float PLATFORM_WIDTH = 0.5, PLATFORM_HEIGHT = 0.05;
+
+enum {
+    SPACE_KEY, LEFT_KEY, RIGHT_KEY
+};
+
+
 class Game {
 private:
     std::vector<GameObject *> _game_objects;
     Vector2f _left_bottom, _right_top;
     bool _paused;
+    bool _keys[3];
 public:
     Game();
 
