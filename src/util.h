@@ -20,6 +20,8 @@ public:
     Vector2f dot(const Vector2f &);
 
     Vector2f cross(const Vector2f &);
+
+    void normalize();
 };
 
 #endif //BREAK_THE_BRICKS_UTIL_H
