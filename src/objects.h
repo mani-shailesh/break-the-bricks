@@ -15,7 +15,7 @@ public:
 
     virtual void draw() = 0;
 
-    virtual void update(Vector2f left_bottom, Vector2f right_top) = 0;
+    virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys) = 0;
 };
 
 class Ball : public GameObject {
@@ -25,30 +25,33 @@ private:
 public:
     Ball(Vector2f pos, float radius, float speed);
 
-    void update(Vector2f left_bottom, Vector2f right_top);
+    void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 
     void draw();
 };
 
 class Brick : public GameObject {
 private:
-    Vector2f _size;
     bool _active;
+protected:
+    Vector2f _size;
 public:
     Brick(Vector2f pos, Vector2f size);
 
     virtual void draw();
 
-    virtual void update(Vector2f left_bottom, Vector2f right_top);
+    virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 
     bool check_collision(const Ball &);
 };
 
 class Platform : public Brick {
+private:
+    float _speed;
 public:
-    Platform(Vector2f pos, Vector2f size);
+    Platform(Vector2f pos, Vector2f size, float speed);
 
-    void update(Vector2f left_bottom, Vector2f right_top);
+    void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 };
 
 #endif //BREAK_THE_BRICKS_OBJECTS_H

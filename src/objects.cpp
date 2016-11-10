@@ -5,6 +5,7 @@
 #include <GL/gl.h>
 #include <cmath>
 #include "objects.h"
+#include "constants.h"
 
 #define PI 3.14159265f
 
@@ -29,7 +30,7 @@ void Brick::draw() {
     );
 }
 
-void Brick::update(Vector2f left_bottom, Vector2f right_top) {
+void Brick::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
 
 }
 
@@ -55,7 +56,7 @@ void Ball::draw() {
     glEnd();
 }
 
-void Ball::update(Vector2f left_bottom, Vector2f right_top) {
+void Ball::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
     _pos = _pos + _velocity;
     if (_pos.get_x() + _radius >= right_top.get_x())
         _velocity = _velocity.reflect(Vector2f(-1, 0));
@@ -66,10 +67,18 @@ void Ball::update(Vector2f left_bottom, Vector2f right_top) {
 }
 
 
-Platform::Platform(Vector2f pos, Vector2f size) : Brick(pos, size) {
-
+Platform::Platform(Vector2f pos, Vector2f size, float speed) : Brick(pos, size) {
+    _speed = speed;
 }
 
-void Platform::update(Vector2f pos, Vector2f size) {
-
+void Platform::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
+    if (keys[LEFT_KEY]) {
+        if (_pos.get_x() - _size.get_x() / 2 > left_bottom.get_x())
+            _pos = _pos - Vector2f(PLATFORM_SPEED, 0);
+        keys[LEFT_KEY] = false;
+    } else if (keys[RIGHT_KEY]) {
+        if (_pos.get_x() + _size.get_x() / 2 < right_top.get_x())
+            _pos = _pos + Vector2f(PLATFORM_SPEED, 0);
+        keys[RIGHT_KEY] = false;
+    }
 }

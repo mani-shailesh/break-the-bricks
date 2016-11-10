@@ -2,7 +2,9 @@
 // Created by shailesh on 11/10/16.
 //
 
+#include <GL/glut.h>
 #include "game.h"
+#include "constants.h"
 
 using namespace std;
 
@@ -42,11 +44,11 @@ void Game::setup() {
     // Adding platform to the scene
     Vector2f platform_pos(0, _left_bottom.get_y() + PLATFORM_HEIGHT / 2);
     Vector2f platform_size(PLATFORM_WIDTH, PLATFORM_HEIGHT);
-    _game_objects.push_back(new Platform(platform_pos, platform_size));
+    _game_objects.push_back(new Platform(platform_pos, platform_size, PLATFORM_SPEED));
 
     // Adding ball to the scene
     Vector2f pos(0, -1 + RADIUS);
-    _game_objects.push_back(new Ball(pos, RADIUS, SPEED));
+    _game_objects.push_back(new Ball(pos, RADIUS, BALL_SPEED));
 }
 
 void Game::update() {
@@ -54,7 +56,7 @@ void Game::update() {
         return;
     vector<GameObject *>::iterator it;
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
-        (*it)->update(_left_bottom, _right_top);
+        (*it)->update(_left_bottom, _right_top, _keys);
     }
 }
 
@@ -67,4 +69,20 @@ void Game::draw() {
 
 void Game::toggle_pause() {
     _paused = !_paused;
+}
+
+void Game::key_pressed(int key) {
+    switch (key) {
+        case GLUT_KEY_LEFT:
+            _keys[LEFT_KEY] = true;
+            break;
+        case GLUT_KEY_RIGHT:
+            _keys[RIGHT_KEY] = true;
+            break;
+        case ' ':
+            _keys[SPACE_KEY] = true;
+            break;
+        default:
+            break;
+    }
 }

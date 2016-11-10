@@ -8,22 +8,6 @@
 #include <vector>
 #include "objects.h"
 
-// constants for bricks
-const float BRICK_WIDTH = 0.3, BRICK_HEIGHT = 0.1;
-const float ROWS = 5, COLUMNS = 7;
-const float GAP = 0.006;
-
-// constants for ball
-const float RADIUS = 0.05;
-const float SPEED = 0.05;
-
-// constants for platform
-const float PLATFORM_WIDTH = 0.5, PLATFORM_HEIGHT = 0.05;
-
-enum {
-    SPACE_KEY, LEFT_KEY, RIGHT_KEY
-};
-
 
 class Game {
 private:
@@ -45,6 +29,8 @@ public:
     void draw();
 
     void toggle_pause();
+
+    void key_pressed(int key);
 };
 
 #endif //BREAK_THE_BRICKS_GAME_H
