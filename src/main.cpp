@@ -36,31 +36,22 @@ void display() {
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
     // Compute aspect ratio of the new window
     if (height == 0) height = 1;                // To prevent divide by 0
-//    if(width < height)
-//        height = width;
-//    else
-//        width = height;
-    GLfloat aspect = (GLfloat) width / (GLfloat) height;
+
+    GLsizei viewport_size = width < height ? width : height;
 
     GLfloat clip_x_left, clip_x_right, clip_y_bottom, clip_y_top;
 
     // Set the viewport to cover the new window
-    glViewport(0, 0, width, height);
+    glViewport((width - viewport_size) / 2, (height - viewport_size) / 2, viewport_size, viewport_size);
 
-    // Set the aspect ratio of the clipping area to match the viewport
     glMatrixMode(GL_PROJECTION);  // To operate on the Projection matrix
     glLoadIdentity();             // Reset the projection matrix
-    if (width >= height) {
-        clip_x_left = -1.0f * aspect;
-        clip_x_right = 1.0f * aspect;
-        clip_y_bottom = -1.0f;
-        clip_y_top = 1.0f;
-    } else {
-        clip_x_left = -1.0f;
-        clip_x_right = 1.0f;
-        clip_y_bottom = -1.0f / aspect;
-        clip_y_top = 1.0f / aspect;
-    }
+
+    clip_x_left = -1.0f;
+    clip_x_right = 1.0f;
+    clip_y_bottom = -1.0f;
+    clip_y_top = 1.0f;
+
     gluOrtho2D(clip_x_left, clip_x_right, clip_y_bottom, clip_y_top);
     game.reshape(Vector2f(clip_x_left, clip_y_bottom), Vector2f(clip_x_right, clip_y_top));
 }

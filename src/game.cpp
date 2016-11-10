@@ -4,7 +4,6 @@
 
 #include <GL/glut.h>
 #include "game.h"
-#include "constants.h"
 
 using namespace std;
 
@@ -33,6 +32,8 @@ void Game::reset() {
         _game_objects.pop_back();
         delete (gameObject);
     }
+
+
     setup();
 }
 

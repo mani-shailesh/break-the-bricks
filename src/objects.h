@@ -18,18 +18,6 @@ public:
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys) = 0;
 };
 
-class Ball : public GameObject {
-private:
-    float _radius;
-    Vector2f _velocity;
-public:
-    Ball(Vector2f pos, float radius, float speed);
-
-    void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
-
-    void draw();
-};
-
 class Brick : public GameObject {
 private:
     bool _active;
@@ -43,6 +31,20 @@ public:
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 
     Vector2f *get_collision_normal(const Ball &ball);
+};
+
+class Ball : public GameObject {
+private:
+    float _radius;
+    Vector2f _velocity;
+public:
+    Ball(Vector2f pos, float radius, float speed);
+
+    void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
+
+    void draw();
+
+    friend Vector2f *Brick::get_collision_normal(const Ball &ball);
 };
 
 class Platform : public Brick {

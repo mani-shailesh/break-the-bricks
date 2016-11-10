@@ -7,6 +7,7 @@
 
 #include <vector>
 #include "objects.h"
+#include "constants.h"
 
 
 class Game {
@@ -14,7 +15,7 @@ private:
     std::vector<GameObject *> _game_objects;
     Vector2f _left_bottom, _right_top;
     bool _paused;
-    bool _keys[3];
+    bool _keys[NUM_KEYS];
 public:
     Game();
 

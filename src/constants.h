@@ -18,6 +18,8 @@ const float BALL_SPEED = 0.05;
 const float PLATFORM_WIDTH = 0.5, PLATFORM_HEIGHT = 0.05;
 const float PLATFORM_SPEED = 0.05;
 
+// constansts for keys
+const int NUM_KEYS = 3;
 enum {
     LEFT_KEY, RIGHT_KEY, RESET_KEY
 };
