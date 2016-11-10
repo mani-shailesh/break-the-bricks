@@ -13,9 +13,15 @@ public:
 
     Vector2f(float x, float y);
 
+    inline float get_x() { return x; }
+
+    inline float get_y() { return y; }
+
     Vector2f operator-(const Vector2f &);
 
     Vector2f operator+(const Vector2f &);
+
+    Vector2f operator*(const float &);
 
     float dot(const Vector2f &);
 

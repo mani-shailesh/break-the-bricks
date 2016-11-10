@@ -23,6 +23,10 @@ Vector2f Vector2f::operator-(const Vector2f &other) {
     return Vector2f(x - other.x, y - other.y);
 }
 
+Vector2f Vector2f::operator*(const float &a) {
+    return Vector2f(x * a, y * a);
+}
+
 void Vector2f::normalize() {
     float magnitude = sqrt(x * x + y * y);
     x /= magnitude;

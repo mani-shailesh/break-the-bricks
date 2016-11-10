@@ -8,10 +8,10 @@
 #include "util.h"
 
 class GameObject {
-private:
+protected:
     Vector2f _pos;
 public:
-    GameObject();
+    GameObject(Vector2f);
 
     virtual void draw() = 0;
 
@@ -20,10 +20,10 @@ public:
 
 class Ball : public GameObject {
 private:
-    float radius;
+    float _radius;
     Vector2f _velocity;
 public:
-    Ball();
+    Ball(Vector2f pos, float radius, float speed);
 
     void update();
 
@@ -35,7 +35,7 @@ private:
     Vector2f _size;
     bool _active;
 public:
-    Brick();
+    Brick(Vector2f pos, Vector2f size);
 
     void draw();
 

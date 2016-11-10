@@ -8,10 +8,14 @@
 #include <vector>
 #include "objects.h"
 
+// constants for game window
 const int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
 
+// constants for bricks
 const float BRICK_WIDTH = 2, BRICK_HEIGHT = 0.5;
 const float ROWS = 7;
+
+// constants for ball
 
 class Game {
 private:
