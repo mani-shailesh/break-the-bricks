@@ -6,17 +6,21 @@
 #define BREAK_THE_BRICKS_GAME_H
 
 #include <vector>
+#include "objects.h"
 
-class Brick;
+const float BRICK_WIDTH = 2, BRICK_HEIGHT = 0.5;
+const float ROWS = 7;
 
 class Game {
 private:
-    std::vector<Brick *> _bricks;
+    std::vector<GameObject *> _game_objects;
     bool _paused;
 public:
     Game();
 
     ~Game();
+
+    void setup();
 
     void update();
 

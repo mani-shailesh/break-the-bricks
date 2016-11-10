@@ -14,6 +14,8 @@ public:
     GameObject();
 
     virtual void draw() = 0;
+
+    virtual void update() = 0;
 };
 
 class Ball : public GameObject {
@@ -23,7 +25,7 @@ private:
 public:
     Ball();
 
-    void move();
+    void update();
 
     void draw();
 };
@@ -36,6 +38,8 @@ public:
     Brick();
 
     void draw();
+
+    void update();
 
     bool check_collision(const Ball &);
 };
