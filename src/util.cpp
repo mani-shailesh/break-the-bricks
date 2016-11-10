@@ -2,6 +2,7 @@
 // Created by shailesh on 11/10/16.
 //
 
+#include <cmath>
 #include "util.h"
 
 Vector2f::Vector2f() {
@@ -21,3 +22,15 @@ Vector2f Vector2f::operator+(const Vector2f &other) {
 Vector2f Vector2f::operator-(const Vector2f &other) {
     return Vector2f(x - other.x, y - other.y);
 }
+
+void Vector2f::normalize() {
+    float magnitude = sqrt((x*x)+(y*y));
+    x = x/magnitude;
+    y = y/magnitude;
+}
+
+float Vector2f::dot(const Vector2f &other) {
+    float dot_product = (x*other.x)+(y*other.y);
+    return dot_product;
+}
+

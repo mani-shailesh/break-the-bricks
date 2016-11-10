@@ -19,9 +19,7 @@ public:
 
     Vector2f operator+(const Vector2f &);
 
-    Vector2f dot(const Vector2f &);
-
-    Vector2f cross(const Vector2f &);
+    float dot(const Vector2f &);
 
     void normalize();
 };
