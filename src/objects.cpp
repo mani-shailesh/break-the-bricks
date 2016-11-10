@@ -4,11 +4,12 @@
 
 #include <GL/gl.h>
 #include <cmath>
+#include <vector>
 #include "objects.h"
 #include "constants.h"
 
 #define PI 3.14159265f
-
+using namespace std;
 
 // Definitions for GameObject
 GameObject::GameObject(Vector2f pos) {
@@ -38,24 +39,19 @@ void Rectangle::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {}
 
 
 Vector2f *Rectangle::get_collision_normal(const Ball &ball) {
-    float half_brick_width = _size.get_x() / 2;
-    float half_brick_height = _size.get_y() / 2;
-
     Vector2f diff1 = ball._pos - _pos;
-    float diff1_x = diff1.get_x();
-    float diff1_y = diff1.get_y();
+    Vector2f clamped_diff1 = diff1.clamp(_size * -0.5, _size * 0.5);
 
-    float clamped_diff1_x = clamp(diff1_x, minimum(half_brick_height, half_brick_width),
-                                  maximum(half_brick_height, half_brick_width));
-    float clamped_diff1_y = clamp(diff1_y, minimum(half_brick_height, half_brick_width),
-                                  maximum(half_brick_height, half_brick_width));
-
-    Vector2f closest_point(clamped_diff1_x, clamped_diff1_y);
+    Vector2f closest_point = _pos + clamped_diff1;
 
     Vector2f diff2 = closest_point - ball._pos;
     if (diff2.norm() <= ball._radius) {
-        Vector2f *normal = new Vector2f(diff1.get_x(), diff1.get_y());
-        return normal;
+        if (abs(diff1.get_x()) > abs(diff1.get_y()))
+            return new Vector2f(diff1.get_x(), 0);
+        else if (abs(diff1.get_x()) < abs(diff1.get_y()))
+            return new Vector2f(0, diff1.get_y());
+        else
+            return new Vector2f(diff1.get_x(), diff1.get_y());
     }
     return nullptr;
 }
@@ -99,6 +95,13 @@ void Platform::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
     }
 }
 
+Vector2f *Platform::get_collision_normal(const Ball &ball) {
+    Vector2f *normal = Rectangle::get_collision_normal(ball);
+    if (normal)
+        return new Vector2f(0, 1);
+    return normal;
+}
+
 
 // Definitions for Ball
 Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
@@ -134,4 +137,13 @@ void Ball::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
         _velocity = _velocity.reflect(Vector2f(1, 0));
     if (_pos.get_y() + _radius >= right_top.get_y())
         _velocity = _velocity.reflect(Vector2f(0, -1));
+}
+
+void Ball::check_collisions(std::vector<GameObject *> &game_objects) {
+    vector<GameObject *>::iterator it;
+    for (it = game_objects.begin(); it != game_objects.end(); it++) {
+        Vector2f *normal = (*it)->get_collision_normal(*this);
+        if (normal)
+            _velocity = _velocity.reflect(*normal);
+    }
 }

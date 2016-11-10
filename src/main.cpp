@@ -12,7 +12,7 @@
 // constants for game window
 const int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
 
-int const REFRESH_MILI_SEC = 30;
+int const REFRESH_MILLI_SEC = 40;
 
 Game game;
 
@@ -60,7 +60,7 @@ void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integ
 void Timer(int value) {
     game.update();
     glutPostRedisplay();    // Post a paint request to activate display()
-    glutTimerFunc(REFRESH_MILI_SEC, Timer, 0); // subsequent timer call at milliseconds
+    glutTimerFunc(REFRESH_MILLI_SEC, Timer, 0); // subsequent timer call at milliseconds
 }
 
 void keyboard(unsigned char key, int x, int y) {

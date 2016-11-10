@@ -23,7 +23,7 @@ Game::~Game() {
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
         delete (*it);
     }
-    delete (ball);
+    delete (_ball);
 }
 
 void Game::reset() {
@@ -33,7 +33,7 @@ void Game::reset() {
         _game_objects.pop_back();
         delete (gameObject);
     }
-    delete (ball);
+    delete (_ball);
 
     setup();
 }
@@ -60,17 +60,23 @@ void Game::setup() {
 
     // Adding ball to the scene
     Vector2f pos(0, platform_pos.get_y() + PLATFORM_HEIGHT / 2 + RADIUS);
-    ball = new Ball(pos, RADIUS, BALL_SPEED);
+    _ball = new Ball(pos, RADIUS, BALL_SPEED);
 }
 
 void Game::update() {
     if (_paused)
         return;
+    if (is_over()) {
+        reset();
+        return;
+    }
     vector<GameObject *>::iterator it;
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
         (*it)->update(_left_bottom, _right_top, _keys);
     }
-    ball->update(_left_bottom, _right_top, _keys);
+
+    _ball->update(_left_bottom, _right_top, _keys);
+    _ball->check_collisions(_game_objects);
 }
 
 void Game::draw() {
@@ -78,7 +84,7 @@ void Game::draw() {
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
         (*it)->draw();
     }
-    ball->draw();
+    _ball->draw();
 }
 
 void Game::toggle_pause() {
@@ -111,4 +117,9 @@ void Game::key_pressed(int key) {
 
     if (key != 'r' && key != 'R')
         _keys[RESET_KEY] = false;
+}
+
+bool Game::is_over() {
+    Vector2f ball_pos = _ball->get_pos();
+    return (ball_pos.get_y() < _left_bottom.get_y() + PLATFORM_HEIGHT / 2);
 }

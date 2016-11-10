@@ -5,6 +5,8 @@
 #ifndef BREAK_THE_BRICKS_UTIL_H
 #define BREAK_THE_BRICKS_UTIL_H
 
+#include <algorithm>
+
 class Vector2f {
 private:
     float x, y;
@@ -30,24 +32,15 @@ public:
     float norm();
 
     Vector2f reflect(Vector2f normal);
+
+    Vector2f clamp(Vector2f min, Vector2f max);
 };
 
 
 // Some other utility functions
-inline float minimum(float a, float b) {
-    if (a <= b)
-        return a;
-    return b;
-}
 
-inline float maximum(float a, float b) {
-    if (a >= b)
-        return a;
-    return b;
-}
-
-inline float clamp(float num, float a, float b) {
-    return maximum(a, minimum(b, num));
+inline float clampf(float num, float a, float b) {
+    return std::max(a, std::min(b, num));
 }
 
 #endif //BREAK_THE_BRICKS_UTIL_H

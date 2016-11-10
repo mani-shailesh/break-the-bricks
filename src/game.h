@@ -13,10 +13,12 @@
 class Game {
 private:
     std::vector<GameObject *> _game_objects;
-    Ball *ball;
+    Ball *_ball;
     Vector2f _left_bottom, _right_top;
     bool _paused;
     bool _keys[NUM_KEYS];
+
+    bool is_over();
 public:
     Game();
 

@@ -5,6 +5,7 @@
 #ifndef BREAK_THE_BRICKS_OBJECTS_H
 #define BREAK_THE_BRICKS_OBJECTS_H
 
+#include <vector>
 #include "util.h"
 
 class Ball;
@@ -14,6 +15,8 @@ protected:
     Vector2f _pos;
 public:
     GameObject(Vector2f pos);
+
+    inline Vector2f get_pos() { return _pos; };
 
     virtual void draw() = 0;
 
@@ -55,6 +58,8 @@ public:
     Platform(Vector2f pos, Vector2f size, float speed);
 
     void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
+
+    Vector2f *get_collision_normal(const Ball &ball);
 };
 
 
@@ -70,6 +75,8 @@ public:
     void draw();
 
     friend Vector2f *Rectangle::get_collision_normal(const Ball &ball);
+
+    void check_collisions(std::vector<GameObject *> &game_objects);
 };
 
 #endif //BREAK_THE_BRICKS_OBJECTS_H

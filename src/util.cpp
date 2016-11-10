@@ -46,3 +46,7 @@ Vector2f Vector2f::reflect(Vector2f normal) {
 float Vector2f::norm() {
     return (float) sqrt(x * x + y * y);
 }
+
+Vector2f Vector2f::clamp(Vector2f a, Vector2f b) {
+    return Vector2f(clampf(x, a.x, b.x), clampf(y, a.y, b.y));
+}
