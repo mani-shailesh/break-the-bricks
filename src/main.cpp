@@ -36,6 +36,10 @@ void display() {
 void reshape(GLsizei width, GLsizei height) {  // GLsizei for non-negative integer
     // Compute aspect ratio of the new window
     if (height == 0) height = 1;                // To prevent divide by 0
+//    if(width < height)
+//        height = width;
+//    else
+//        width = height;
     GLfloat aspect = (GLfloat) width / (GLfloat) height;
 
     GLfloat clip_x_left, clip_x_right, clip_y_bottom, clip_y_top;

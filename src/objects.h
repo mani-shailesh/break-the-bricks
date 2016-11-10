@@ -42,7 +42,7 @@ public:
 
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 
-    bool check_collision(const Ball &);
+    Vector2f *get_collision_normal(const Ball &ball);
 };
 
 class Platform : public Brick {

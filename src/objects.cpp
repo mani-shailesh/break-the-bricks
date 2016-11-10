@@ -36,6 +36,15 @@ void Brick::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
 
 }
 
+Vector2f *Brick::get_collision_normal(const Ball &ball) {
+    if (!_active)
+        return nullptr;
+
+
+    Vector2f *normal = new Vector2f();
+    return normal;
+}
+
 // Definitions for Ball
 Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
     _radius = radius;
