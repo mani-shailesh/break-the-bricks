@@ -36,13 +36,46 @@ void Brick::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
 
 }
 
+float minimum(float a, float b) {
+    if (a <= b)
+        return a;
+    return b;
+}
+
+float maximum(float a, float b) {
+    if (a >= b)
+        return a;
+    return b;
+}
+
+float clamp(float num, float a, float b) {
+    return maximum(a, minimum(b, num));
+}
+
 Vector2f *Brick::get_collision_normal(const Ball &ball) {
     if (!_active)
         return nullptr;
 
+    Vector2f diff1 = ball._pos - _pos;
 
-    Vector2f *normal = new Vector2f();
-    return normal;
+    float half_brick_width = _size.get_x() / 2;
+    float half_brick_height = _size.get_y() / 2;
+    float diff1_x = diff1.get_x();
+    float diff1_y = diff1.get_y();
+
+    float clamped_diff1_x = clamp(diff1_x, minimum(half_brick_height, half_brick_width),
+                                  maximum(half_brick_height, half_brick_width));
+    float clamped_diff1_y = clamp(diff1_y, minimum(half_brick_height, half_brick_width),
+                                  maximum(half_brick_height, half_brick_width));
+
+    Vector2f closest_point(clamped_diff1_x, clamped_diff1_y);
+
+    Vector2f diff2 = closest_point - ball._pos;
+    if (diff2.norm <= ball._radius) {
+        Vector2f *normal = new Vector2f(diff1.get_x(), diff1.get_y());
+        return normal;
+    }
+    return nullptr;
 }
 
 // Definitions for Ball
