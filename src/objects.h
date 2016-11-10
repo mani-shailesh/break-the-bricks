@@ -18,6 +18,8 @@ public:
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys) = 0;
 };
 
+class Ball;
+
 class Brick : public GameObject {
 private:
     bool _active;
