@@ -46,12 +46,12 @@ Vector2f *Rectangle::get_collision_normal(Ball &ball) {
 
     Vector2f diff2 = closest_point - ball._pos;
     if (diff2.norm() <= ball._radius) {
-        if (abs(diff1.get_x()) > abs(diff1.get_y()))
-            return new Vector2f(diff1.get_x(), 0);
-        else if (abs(diff1.get_x()) < abs(diff1.get_y()))
-            return new Vector2f(0, diff1.get_y());
+        if (abs(diff2.get_x()) > abs(diff2.get_y()))
+            return new Vector2f(diff2.get_x(), 0);
+        else if (abs(diff2.get_x()) < abs(diff2.get_y()))
+            return new Vector2f(0, diff2.get_y());
         else
-            return new Vector2f(diff1.get_x(), diff1.get_y());
+            return new Vector2f(diff2.get_x(), diff2.get_y());
     }
     return nullptr;
 }

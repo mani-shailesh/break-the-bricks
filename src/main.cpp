@@ -10,7 +10,7 @@
 
 
 // constants for game window
-int const REFRESH_MILLI_SEC = 30;
+int const REFRESH_MILLI_SEC = 20;
 
 // variables for game window
 int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;

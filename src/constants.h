@@ -12,7 +12,7 @@ const float GAP = 0.006;
 
 // constants for ball
 const float RADIUS = 0.04;
-const float BALL_SPEED = 0.04;
+const float BALL_SPEED = 0.03;
 
 // constants for platform
 const float PLATFORM_WIDTH = 0.5, PLATFORM_HEIGHT = 0.05;
