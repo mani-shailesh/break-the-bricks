@@ -151,6 +151,7 @@ void Ball::check_collisions(std::vector<GameObject *> &game_objects) {
         Vector2f *normal = (*it)->get_collision_normal(*this);
         if (normal) {
             _velocity = _velocity.reflect(*normal);
+            update_speed();
             break;
         }
     }
@@ -159,4 +160,11 @@ void Ball::check_collisions(std::vector<GameObject *> &game_objects) {
 void Ball::set_velocity_dir(Vector2f velocity) {
     velocity.normalize();
     _velocity = velocity * _velocity.norm();
+}
+
+void Ball::update_speed() {
+    float speed = _velocity.norm();
+    speed += BALL_DELTA_SPEED;
+    _velocity.normalize();
+    _velocity = _velocity * speed;
 }

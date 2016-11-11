@@ -67,6 +67,8 @@ class Ball : public GameObject {
 private:
     float _radius;
     Vector2f _velocity;
+
+    void update_speed();
 public:
     Ball(Vector2f pos, float radius, float speed);
 
