@@ -16,9 +16,13 @@ private:
     Ball *_ball;
     Vector2f _left_bottom, _right_top;
     int state;
+    int total_time;
     bool _keys[NUM_KEYS];
+    int num_active_bricks;
 
     void update_state();
+
+    void draw_scoreboard();
 public:
     Game();
 
@@ -35,6 +39,8 @@ public:
     void key_pressed(int key);
 
     void reshape(Vector2f left_bottom, Vector2f right_top);
+
+    void check_collisions();
 };
 
 #endif //BREAK_THE_BRICKS_GAME_H

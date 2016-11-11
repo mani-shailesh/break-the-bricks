@@ -3,6 +3,7 @@
 //
 
 #include <GL/glut.h>
+#include <iostream>
 #include "game.h"
 
 using namespace std;
@@ -11,6 +12,8 @@ Game::Game() {
     state = ACTIVE;
     _left_bottom = Vector2f(-1, -1);
     _right_top = Vector2f(1, 1);
+    total_time = 0;
+    num_active_bricks = 0;
 }
 
 void Game::reshape(Vector2f left_bottom, Vector2f right_top) {
@@ -35,6 +38,7 @@ void Game::reset() {
     delete (_ball);
 
     setup();
+    total_time = 0;
 }
 
 void Game::setup() {
@@ -53,6 +57,7 @@ void Game::setup() {
 
         for (int jj = 0; jj < COLUMNS; jj++) {
             _game_objects.push_back(new Brick(init_pos + pos, size));
+            num_active_bricks ++;
             pos = pos + Vector2f(BRICK_WIDTH + GAP, 0);
         }
     }
@@ -76,8 +81,9 @@ void Game::update() {
                 (*it)->update(_left_bottom, _right_top, _keys);
             }
 
-            _ball->check_collisions(_game_objects);
+            check_collisions();
             _ball->update(_left_bottom, _right_top, _keys);
+            total_time += 1;
             break;
         case WON:
             break;
@@ -94,6 +100,8 @@ void Game::draw() {
         (*it)->draw();
     }
     _ball->draw();
+
+    draw_scoreboard();
 }
 
 void Game::key_pressed(int key) {
@@ -129,10 +137,53 @@ void Game::key_pressed(int key) {
 }
 
 void Game::update_state(){
-    if(_game_objects.size() == 1)   // only platform remains
+    if(num_active_bricks == 0)   // only platform remains
         state = WON;
 
     Vector2f ball_pos = _ball->get_pos();
     if(ball_pos.get_y() < _left_bottom.get_y() + PLATFORM_HEIGHT)
         state = LOST;
+}
+
+void Game::check_collisions() {
+    vector<GameObject *>::iterator it;
+    for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
+        Vector2f *normal = (*it)->get_collision_normal(*_ball);
+        if (normal) {
+            _ball->set_velocity_dir(_ball->get_velocity().reflect(*normal));
+            _ball->set_speed(_ball->get_speed() + BALL_DELTA_SPEED);
+            num_active_bricks--;
+            break;
+        }
+    }
+}
+
+void Game::draw_scoreboard() {
+
+    string time_text = "Time " + to_string((total_time * REFRESH_MILLI_SEC)/1000);
+    string text;
+
+    switch (state){
+        case ACTIVE:
+            text = time_text;
+            break;
+        case PAUSED:
+            text = time_text + " PAUSED!";
+            break;
+        case LOST:
+            text = "GAME OVER!";
+            break;
+        case WON:
+            text = time_text + "YOU WON!";
+            break;
+    }
+
+    glPushMatrix();
+
+    glTranslatef(_left_bottom.get_x(), 0, 0);
+    glScalef(1/1000.0, 1/1000.0, 1/1000.0);
+
+    for(int i=0; i<text.size(); i++)
+        glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, text[i]);
+    glPopMatrix();
 }

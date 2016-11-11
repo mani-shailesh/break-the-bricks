@@ -5,6 +5,10 @@
 #ifndef BREAK_THE_BRICKS_CONSTANTS_H
 #define BREAK_THE_BRICKS_CONSTANTS_H
 
+
+// constants for game window
+int const REFRESH_MILLI_SEC = 20;
+
 // constants for game
 enum{
     ACTIVE, PAUSED, LOST, WON

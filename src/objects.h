@@ -67,8 +67,6 @@ class Ball : public GameObject {
 private:
     float _radius;
     Vector2f _velocity;
-
-    void update_speed();
 public:
     Ball(Vector2f pos, float radius, float speed);
 
@@ -78,11 +76,13 @@ public:
 
     friend Vector2f *Rectangle::get_collision_normal(Ball &ball);
 
-    void check_collisions(std::vector<GameObject *> &game_objects);
-
     void set_velocity_dir(Vector2f velocity);
 
     inline Vector2f get_velocity(void) { return _velocity; }
+
+    void set_speed(float speed);
+
+    inline float get_speed(void){ return _velocity.norm(); }
 };
 
 #endif //BREAK_THE_BRICKS_OBJECTS_H
