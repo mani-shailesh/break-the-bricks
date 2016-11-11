@@ -2,9 +2,11 @@
 // Created by shailesh on 11/10/16.
 //
 
+#include <GL/gl.h>
 #include <GL/glut.h>
 #include <iostream>
 #include <fstream>
+#include <limits>
 #include <sys/stat.h>
 #include "game.h"
 
@@ -51,6 +53,10 @@ void Game::free_all(){
     if(_ball)
         delete (_ball);
 }
+
+/*
+ * Setup the scene at start of each game.
+ */
 
 void Game::setup() {
 
@@ -110,6 +116,9 @@ void Game::setup() {
     _ball->set_texture(ball_texture);
 }
 
+/*
+ * Update to be done at each frame.
+ */
 void Game::update() {
     update_state();
     vector<GameObject *>::iterator it;
@@ -136,6 +145,9 @@ void Game::update() {
     }
 }
 
+/*
+ * Draw at each frame
+ */
 void Game::draw() {
     _bg->draw();
 
@@ -216,8 +228,10 @@ void Game::check_collisions() {
 */
 void Game::draw_scoreboard() {
 
-    string time_text = "Time " + to_string((_total_time * REFRESH_MILLI_SEC) / 1000);
+    char time_text[50];
+    sprintf(time_text, "Time %d", (_total_time * REFRESH_MILLI_SEC) / 1000);
     string left_text, right_text, centre_text;
+    char centre_text_buffer[50];
 
     switch (state){
         case ACTIVE:
@@ -233,8 +247,12 @@ void Game::draw_scoreboard() {
         case WON:
             left_text = time_text;
             right_text = "YOU WON!";
-            if (_best_time < numeric_limits<int>::max())
-                centre_text = "\nBEST TIME " + to_string((_best_time * REFRESH_MILLI_SEC) / 1000);
+            if (_best_time < numeric_limits<int>::max()) {
+                sprintf(centre_text_buffer, "Best Time %d", (_best_time * REFRESH_MILLI_SEC) / 1000);
+                centre_text = centre_text_buffer;
+            } else {
+                centre_text = "";
+            }
             break;
         default:
             break;
@@ -313,7 +331,10 @@ void Game::write_best_time() {
 
     struct stat info;
 
+    // Ref : http://stackoverflow.com/questions/18100097/portable-way-to-check-if-directory-exists-windows-linux-c
     if (stat(file_name.c_str(), &info) != 0) {
+
+        //Ref : http://stackoverflow.com/questions/20358455/cross-platform-way-to-make-a-directory
         mode_t n_mode = 0733; // UNIX style permissions
         int n_error = 0;
 #if defined(_WIN32)

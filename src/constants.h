@@ -5,6 +5,7 @@
 #ifndef BREAK_THE_BRICKS_CONSTANTS_H
 #define BREAK_THE_BRICKS_CONSTANTS_H
 
+#include <string>
 
 // constants for game window
 int const REFRESH_MILLI_SEC = 20;

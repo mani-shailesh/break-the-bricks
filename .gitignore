@@ -2,3 +2,6 @@
 *.xml
 .idea
 *.bin
+*.o
+*.gch
+*.out

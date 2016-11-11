@@ -6,6 +6,9 @@
 #define BREAK_THE_BRICKS_GAME_H
 
 #include <vector>
+#include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
 #include "objects.h"
 #include "constants.h"
 

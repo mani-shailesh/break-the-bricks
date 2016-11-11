@@ -7,6 +7,11 @@
 
 #include <algorithm>
 #include <GL/gl.h>
+#include <GL/glu.h>
+#include <GL/glut.h>
+#include <string>
+#include <cstdio>
+#include <iostream>
 
 class Vector2f {
 private:

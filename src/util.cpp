@@ -3,8 +3,10 @@
 //
 
 #include <cmath>
+#include <GL/gl.h>
 #include <GL/glu.h>
 #include "util.h"
+#include <fstream>
 
 Vector2f::Vector2f() {
     x = 0;

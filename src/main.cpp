@@ -4,8 +4,6 @@
 
 #include "game.h"
 
-#include <GL/glut.h>
-
 #define WINDOW_TITLE "Break the Bricks"
 
 // variables for game window

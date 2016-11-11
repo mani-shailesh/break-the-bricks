@@ -3,6 +3,7 @@
 //
 
 #include <GL/gl.h>
+#include <GL/glut.h>
 #include <cmath>
 #include <vector>
 #include "objects.h"
@@ -14,11 +15,11 @@ using namespace std;
 // Definitions for GameObject
 GameObject::GameObject(Vector2f pos) {
     _pos = pos;
-    _texture = nullptr;
+    _texture = 0;
 }
 
 Vector2f *GameObject::get_collision_normal(Ball &ball) {
-    return nullptr;
+    return 0;
 }
 
 void GameObject::set_texture(Texture *texture) {
@@ -77,7 +78,7 @@ Vector2f *Rectangle::get_collision_normal(Ball &ball) {
         else
             return new Vector2f(diff1.get_x(), diff1.get_y());
     }
-    return nullptr;
+    return 0;
 }
 
 
@@ -94,7 +95,7 @@ void Brick::draw() {
 
 Vector2f *Brick::get_collision_normal(Ball &ball) {
     if (!_active)
-        return nullptr;
+        return 0;
     Vector2f *normal = Rectangle::get_collision_normal(ball);
     if (normal)
         _active = false;
@@ -135,7 +136,7 @@ Vector2f *Platform::get_collision_normal(Ball &ball) {
         Vector2f new_velocity(velocity.get_x() + distance_x * speed, abs(velocity.get_y()));
         ball.set_velocity_dir(new_velocity);
     }
-    return nullptr;
+    return 0;
 }
 
 
