@@ -82,6 +82,9 @@ void keyboard(unsigned char key, int x, int y) {
                 glutPositionWindow(WINDOW_POS_X, WINDOW_POS_Y);   // Position top-left corner
             }
             break;
+        case 'q':
+        case 'Q':
+            exit(0);
         default:
             break;
     }

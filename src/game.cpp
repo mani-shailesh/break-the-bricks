@@ -216,6 +216,8 @@ void Game::draw_scoreboard() {
             left_text = time_text;
             right_text = "YOU WON!";
             break;
+        default:
+            break;
     }
 
     glPushMatrix();
