@@ -16,7 +16,7 @@ GameObject::GameObject(Vector2f pos) {
     _pos = pos;
 }
 
-Vector2f *GameObject::get_collision_normal(const Ball &ball) {
+Vector2f *GameObject::get_collision_normal(Ball &ball) {
     return nullptr;
 }
 
@@ -38,7 +38,7 @@ void Rectangle::draw() {
 void Rectangle::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {}
 
 
-Vector2f *Rectangle::get_collision_normal(const Ball &ball) {
+Vector2f *Rectangle::get_collision_normal(Ball &ball) {
     Vector2f diff1 = ball._pos - _pos;
     Vector2f clamped_diff1 = diff1.clamp(_size * -0.5, _size * 0.5);
 
@@ -68,7 +68,7 @@ void Brick::draw() {
     Rectangle::draw();
 }
 
-Vector2f *Brick::get_collision_normal(const Ball &ball) {
+Vector2f *Brick::get_collision_normal(Ball &ball) {
     if (!_active)
         return nullptr;
     Vector2f *normal = Rectangle::get_collision_normal(ball);
@@ -95,18 +95,25 @@ void Platform::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
     }
 }
 
-Vector2f *Platform::get_collision_normal(const Ball &ball) {
+Vector2f *Platform::get_collision_normal(Ball &ball) {
     Vector2f *normal = Rectangle::get_collision_normal(ball);
-    if (normal)
+    if (normal) {
+        float distance_x = 2 * (ball.get_pos().get_x() - _pos.get_x()) / _size.get_x();
+        Vector2f velocity = ball.get_velocity();
+        velocity.normalize();
+        Vector2f new_velocity(velocity.get_x() + distance_x * VEL_DELTA_X, velocity.get_y());
+        ball.set_velocity_dir(new_velocity);
         return new Vector2f(0, 1);
+    }
     return normal;
 }
 
 
 // Definitions for Ball
 Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
+    srand(time(NULL));
     _radius = radius;
-    _velocity = Vector2f(1, 1);
+    _velocity = Vector2f(rand() % 7 + 3, rand() % 7 + 3);
     _velocity.normalize();
     _velocity = _velocity * speed;
 }
@@ -143,7 +150,14 @@ void Ball::check_collisions(std::vector<GameObject *> &game_objects) {
     vector<GameObject *>::iterator it;
     for (it = game_objects.begin(); it != game_objects.end(); it++) {
         Vector2f *normal = (*it)->get_collision_normal(*this);
-        if (normal)
+        if (normal) {
             _velocity = _velocity.reflect(*normal);
+            break;
+        }
     }
+}
+
+void Ball::set_velocity_dir(Vector2f velocity) {
+    velocity.normalize();
+    _velocity = velocity * _velocity.norm();
 }

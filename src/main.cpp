@@ -12,7 +12,7 @@
 // constants for game window
 const int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
 
-int const REFRESH_MILLI_SEC = 40;
+int const REFRESH_MILLI_SEC = 30;
 
 Game game;
 
@@ -81,7 +81,7 @@ int main(int argc, char **argv) {
 
     glutDisplayFunc(display);
     glutReshapeFunc(reshape);
-    glutTimerFunc(0, Timer, 0);
+    glutTimerFunc(REFRESH_MILLI_SEC, Timer, 0);
 
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(keyboard_special);

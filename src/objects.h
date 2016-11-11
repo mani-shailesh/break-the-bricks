@@ -22,7 +22,7 @@ public:
 
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys) = 0;
 
-    virtual Vector2f *get_collision_normal(const Ball &ball);
+    virtual Vector2f *get_collision_normal(Ball &ball);
 };
 
 class Rectangle : public GameObject {
@@ -35,7 +35,7 @@ public:
 
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 
-    virtual Vector2f *get_collision_normal(const Ball &ball);
+    virtual Vector2f *get_collision_normal(Ball &ball);
 };
 
 
@@ -45,7 +45,7 @@ private:
 public:
     Brick(Vector2f pos, Vector2f size);
 
-    Vector2f *get_collision_normal(const Ball &ball);
+    Vector2f *get_collision_normal(Ball &ball);
 
     void draw();
 };
@@ -59,7 +59,7 @@ public:
 
     void update(Vector2f left_bottom, Vector2f right_top, bool *keys);
 
-    Vector2f *get_collision_normal(const Ball &ball);
+    Vector2f *get_collision_normal(Ball &ball);
 };
 
 
@@ -74,9 +74,13 @@ public:
 
     void draw();
 
-    friend Vector2f *Rectangle::get_collision_normal(const Ball &ball);
+    friend Vector2f *Rectangle::get_collision_normal(Ball &ball);
 
     void check_collisions(std::vector<GameObject *> &game_objects);
+
+    void set_velocity_dir(Vector2f velocity);
+
+    inline Vector2f get_velocity(void) { return _velocity; }
 };
 
 #endif //BREAK_THE_BRICKS_OBJECTS_H

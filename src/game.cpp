@@ -75,8 +75,8 @@ void Game::update() {
         (*it)->update(_left_bottom, _right_top, _keys);
     }
 
-    _ball->update(_left_bottom, _right_top, _keys);
     _ball->check_collisions(_game_objects);
+    _ball->update(_left_bottom, _right_top, _keys);
 }
 
 void Game::draw() {
@@ -121,5 +121,5 @@ void Game::key_pressed(int key) {
 
 bool Game::is_over() {
     Vector2f ball_pos = _ball->get_pos();
-    return (ball_pos.get_y() < _left_bottom.get_y() + PLATFORM_HEIGHT / 2);
+    return (ball_pos.get_y() < _left_bottom.get_y() + PLATFORM_HEIGHT);
 }
