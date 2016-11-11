@@ -17,13 +17,12 @@ const float GAP = 0.006;
 
 // constants for ball
 const float RADIUS = 0.04;
-const float BALL_SPEED = 0.03;
-const float BALL_DELTA_SPEED = 0.01f / 50;
+const float BALL_SPEED = 0.025;
+const float BALL_DELTA_SPEED = 0.01f / 40;
 
 // constants for platform
 const float PLATFORM_WIDTH = 0.5, PLATFORM_HEIGHT = 0.05;
-const float PLATFORM_SPEED = 0.08;
-const float VEL_DELTA_X = 0.03;
+const float PLATFORM_SPEED = 0.1;
 
 // constants for keys
 const int NUM_KEYS = 3;

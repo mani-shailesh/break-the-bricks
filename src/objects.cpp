@@ -47,11 +47,11 @@ Vector2f *Rectangle::get_collision_normal(Ball &ball) {
     Vector2f diff2 = closest_point - ball._pos;
     if (diff2.norm() <= ball._radius) {
         if (abs(diff2.get_x()) > abs(diff2.get_y()))
-            return new Vector2f(diff2.get_x(), 0);
+            return new Vector2f(diff1.get_x(), 0);
         else if (abs(diff2.get_x()) < abs(diff2.get_y()))
-            return new Vector2f(0, diff2.get_y());
+            return new Vector2f(0, diff1.get_y());
         else
-            return new Vector2f(diff2.get_x(), diff2.get_y());
+            return new Vector2f(diff1.get_x(), diff1.get_y());
     }
     return nullptr;
 }
@@ -100,8 +100,9 @@ Vector2f *Platform::get_collision_normal(Ball &ball) {
     if (normal) {
         float distance_x = 2 * (ball.get_pos().get_x() - _pos.get_x()) / _size.get_x();
         Vector2f velocity = ball.get_velocity();
+        float speed = velocity.norm();
         velocity.normalize();
-        Vector2f new_velocity(velocity.get_x() + distance_x * VEL_DELTA_X, abs(velocity.get_y()));
+        Vector2f new_velocity(velocity.get_x() + distance_x * speed, abs(velocity.get_y()));
         ball.set_velocity_dir(new_velocity);
     }
     return nullptr;
