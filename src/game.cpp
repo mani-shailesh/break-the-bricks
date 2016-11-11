@@ -46,7 +46,12 @@ void Game::setup() {
     Vector2f size(BRICK_WIDTH, BRICK_HEIGHT);
 
     for (int ii = 0; ii < ROWS; ii++) {
-        Vector2f pos(0 + BRICK_WIDTH / 2, ii * (BRICK_HEIGHT + GAP));
+        Vector2f pos;
+        if(ii%2 == 0)
+            pos = Vector2f(BRICK_WIDTH / 2, ii * (BRICK_HEIGHT + GAP));
+        else
+            pos = Vector2f(0, ii * (BRICK_HEIGHT + GAP));
+
         for (int jj = 0; jj < COLUMNS; jj++) {
             _game_objects.push_back(new Brick(init_pos + pos, size));
             pos = pos + Vector2f(BRICK_WIDTH + GAP, 0);
