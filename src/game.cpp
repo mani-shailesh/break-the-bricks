@@ -161,29 +161,43 @@ void Game::check_collisions() {
 void Game::draw_scoreboard() {
 
     string time_text = "Time " + to_string((total_time * REFRESH_MILLI_SEC)/1000);
-    string text;
+    string left_text;
+    string right_text;
 
     switch (state){
         case ACTIVE:
-            text = time_text;
+            left_text = time_text;
             break;
         case PAUSED:
-            text = time_text + " PAUSED!";
+            left_text = time_text;
+            right_text = "PAUSED!";
             break;
         case LOST:
-            text = "GAME OVER!";
+            right_text = "GAME OVER!";
             break;
         case WON:
-            text = time_text + "YOU WON!";
+            left_text = time_text;
+            right_text = "YOU WON!";
             break;
     }
 
     glPushMatrix();
 
     glTranslatef(_left_bottom.get_x(), 0, 0);
-    glScalef(1/1000.0, 1/1000.0, 1/1000.0);
+    glScalef(FONT_SCALING_FACTOR, FONT_SCALING_FACTOR, FONT_SCALING_FACTOR);
 
-    for(int i=0; i<text.size(); i++)
-        glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, text[i]);
+    for(int i=0; i<left_text.size(); i++)
+        glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, left_text[i]);
+
+    glPopMatrix();
+
+    glPushMatrix();
+
+    glTranslatef(_right_top.get_x() - right_text.size() * FONT_WIDTH * FONT_SCALING_FACTOR, 0, 0);
+    glScalef(FONT_SCALING_FACTOR, FONT_SCALING_FACTOR, FONT_SCALING_FACTOR);
+
+    for(int i=0; i<right_text.size(); i++)
+        glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, right_text[i]);
+
     glPopMatrix();
 }

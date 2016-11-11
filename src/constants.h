@@ -34,4 +34,8 @@ enum {
     LEFT_KEY, RIGHT_KEY, RESET_KEY
 };
 
+// constants for font
+const float FONT_SCALING_FACTOR = 1.0f/1000;
+const float FONT_WIDTH = 104.76f;
+
 #endif //BREAK_THE_BRICKS_CONSTANTS_H
