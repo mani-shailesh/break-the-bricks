@@ -16,38 +16,62 @@ Vector2f::Vector2f(float x, float y) {
     this->y = y;
 }
 
+/*
+    Function to add two vectors.
+*/
 Vector2f Vector2f::operator+(const Vector2f &other) const {
     return Vector2f(x + other.x, y + other.y);
 }
 
+/*
+    Function to subtract two vectors.
+*/
 Vector2f Vector2f::operator-(const Vector2f &other) const {
     return Vector2f(x - other.x, y - other.y);
 }
 
+/*
+    Function to multiply a vector with a scalar.
+*/
 Vector2f Vector2f::operator*(const float &a) const {
     return Vector2f(x * a, y * a);
 }
 
+/*
+    Function to normalize a vector.
+*/
 void Vector2f::normalize() {
     float magnitude = norm();
     x /= magnitude;
     y /= magnitude;
 }
 
+/*
+    Function to find dot product of two vectors.
+*/
 float Vector2f::dot(const Vector2f &other) {
     float dot_product = x * other.x + y * other.y;
     return dot_product;
 }
 
+/*
+    Function to return the reflected vector.
+*/
 Vector2f Vector2f::reflect(Vector2f normal) {
     normal.normalize();
     return *this - normal * (2 * this->dot(normal));
 }
 
+/*
+    Function to find norm of a vector.
+*/
 float Vector2f::norm() {
     return (float) sqrt(x * x + y * y);
 }
 
+/*
+    Function to clamp the current vector between the given vectors.
+*/
 Vector2f Vector2f::clamp(Vector2f a, Vector2f b) {
     return Vector2f(clampf(x, a.x, b.x), clampf(y, a.y, b.y));
 }

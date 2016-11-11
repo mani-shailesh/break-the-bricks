@@ -107,6 +107,9 @@ Platform::Platform(Vector2f pos, Vector2f size, float speed) : Rectangle(pos, si
     _speed = speed;
 }
 
+/*
+    Function to update the position of the platform.
+*/
 void Platform::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
     if (keys[LEFT_KEY]) {
         if (_pos.get_x() - _size.get_x() / 2 > left_bottom.get_x())
@@ -119,6 +122,9 @@ void Platform::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
     }
 }
 
+/*
+    Function to return the common normal in case of a collision.
+*/
 Vector2f *Platform::get_collision_normal(Ball &ball) {
     Vector2f *normal = Rectangle::get_collision_normal(ball);
     if (normal) {
@@ -173,6 +179,9 @@ void Ball::draw() {
     glPopMatrix();
 }
 
+/*
+    Function to update the velocity according to the collision.
+*/
 void Ball::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
     _pos = _pos + _velocity;
     if (_pos.get_x() + _radius >= right_top.get_x())
@@ -183,11 +192,17 @@ void Ball::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {
         _velocity = _velocity.reflect(Vector2f(0, -1));
 }
 
+/*
+    Function to set the direction of the velocity vector.
+*/
 void Ball::set_velocity_dir(Vector2f velocity) {
     velocity.normalize();
     _velocity = velocity * _velocity.norm();
 }
 
+/*
+    Function to set the speed of the ball.
+*/
 void Ball::set_speed(float speed) {
     _velocity.normalize();
     _velocity = _velocity * speed;

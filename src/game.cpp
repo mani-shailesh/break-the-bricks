@@ -147,6 +147,9 @@ void Game::draw() {
     draw_scoreboard();
 }
 
+/*
+    Perform specific actions according to the keys pressed.
+*/
 void Game::key_pressed(int key) {
     switch (key) {
         case GLUT_KEY_LEFT:
@@ -179,6 +182,9 @@ void Game::key_pressed(int key) {
         _keys[RESET_KEY] = false;
 }
 
+/*
+    Function to determine the state (win or loss) of the game.
+*/
 void Game::update_state(){
     if(num_active_bricks == 0)   // only platform remains
         state = WON;
@@ -188,6 +194,9 @@ void Game::update_state(){
         state = LOST;
 }
 
+/*
+    Function to check collisions of the ball with various objects.
+*/
 void Game::check_collisions() {
     vector<GameObject *>::iterator it;
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
@@ -201,6 +210,9 @@ void Game::check_collisions() {
     }
 }
 
+/*
+    Function to draw the scoreboard and display the appropriate message on the screen.
+*/
 void Game::draw_scoreboard() {
 
     string time_text = "Time " + to_string((_total_time * REFRESH_MILLI_SEC) / 1000);
@@ -267,6 +279,9 @@ void Game::draw_scoreboard() {
     glPopMatrix();
 }
 
+/*
+    Function to read the best time from the file.
+*/
 void Game::read_best_time() {
     _best_time = numeric_limits<int>::max();
 
@@ -289,6 +304,9 @@ void Game::read_best_time() {
     in_file.close();
 }
 
+/*
+    Function to write the best time in a file for future comparisons.
+*/
 void Game::write_best_time() {
     string file_name = DATA_DIR + "scores.bin";
 
