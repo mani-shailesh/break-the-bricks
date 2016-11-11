@@ -4,6 +4,7 @@
 
 #include <GL/glut.h>
 #include <iostream>
+#include <fstream>
 #include "game.h"
 
 using namespace std;
@@ -12,8 +13,9 @@ Game::Game() {
     state = ACTIVE;
     _left_bottom = Vector2f(-1, -1);
     _right_top = Vector2f(1, 1);
-    total_time = 0;
+    _total_time = 0;
     num_active_bricks = 0;
+    read_best_time();
 }
 
 void Game::reshape(Vector2f left_bottom, Vector2f right_top) {
@@ -29,7 +31,7 @@ void Game::reset() {
     free_all();
     num_active_bricks = 0;
     setup();
-    total_time = 0;
+    _total_time = 0;
 }
 
 void Game::free_all(){
@@ -87,7 +89,7 @@ void Game::setup() {
     }
 
     // Adding platform to the scene
-    Texture *platform_texture = new Texture(RES_DIR + "ball.bmp", RECT_WIDTH, RECT_HEIGHT);
+    Texture *platform_texture = new Texture(RES_DIR + "platform.bmp", RECT_WIDTH, RECT_HEIGHT);
     platform_texture->load_texture();
     _textures.push_back(platform_texture);
 
@@ -118,9 +120,13 @@ void Game::update() {
 
             check_collisions();
             _ball->update(_left_bottom, _right_top, _keys);
-            total_time += 1;
+            _total_time += 1;
             break;
         case WON:
+            if (_total_time < _best_time) {
+                _best_time = _total_time;
+                write_best_time();
+            }
             break;
         case LOST:
             break;
@@ -197,9 +203,8 @@ void Game::check_collisions() {
 
 void Game::draw_scoreboard() {
 
-    string time_text = "Time " + to_string((total_time * REFRESH_MILLI_SEC)/1000);
-    string left_text;
-    string right_text;
+    string time_text = "Time " + to_string((_total_time * REFRESH_MILLI_SEC) / 1000);
+    string left_text, right_text, centre_text;
 
     switch (state){
         case ACTIVE:
@@ -215,6 +220,8 @@ void Game::draw_scoreboard() {
         case WON:
             left_text = time_text;
             right_text = "YOU WON!";
+            if (_best_time < numeric_limits<int>::max())
+                centre_text = "\nBEST TIME " + to_string((_best_time * REFRESH_MILLI_SEC) / 1000);
             break;
         default:
             break;
@@ -244,7 +251,55 @@ void Game::draw_scoreboard() {
 
     glPopMatrix();
 
+    glPushMatrix();
+
+    glTranslatef(-0.5f * centre_text.size() * FONT_WIDTH * FONT_SCALING_FACTOR,
+                 -0.1f - FONT_HEIGHT * FONT_SCALING_FACTOR, 0);
+    glScalef(FONT_SCALING_FACTOR, FONT_SCALING_FACTOR, FONT_SCALING_FACTOR);
+
+    for (int i = 0; i < centre_text.size(); i++)
+        glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, centre_text[i]);
+
+    glPopMatrix();
+
     glColor3f(1, 1, 1);
 
     glPopMatrix();
+}
+
+void Game::read_best_time() {
+    _best_time = numeric_limits<int>::max();
+
+    string file_name = DATA_DIR + "scores.bin";
+
+    ifstream in_file;
+    in_file.open(file_name.c_str(), ios_base::in);
+
+    if (!in_file.is_open()) {
+        cout << file_name << " not found!" << endl;
+        return;
+    }
+
+    try {
+        in_file.read(reinterpret_cast<char *>(&_best_time), sizeof(int));
+    } catch (const char *msg) {
+        cerr << msg << endl;
+    }
+
+    in_file.close();
+}
+
+void Game::write_best_time() {
+    string file_name = DATA_DIR + "scores.bin";
+
+    ofstream out_file;
+    out_file.open(file_name.c_str(), ios_base::app);
+
+    try {
+        out_file.write(reinterpret_cast<char *>(&_best_time), sizeof(int));
+    } catch (const char *msg) {
+        cerr << msg << endl;
+    }
+
+    out_file.close();
 }

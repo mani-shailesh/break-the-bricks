@@ -18,15 +18,20 @@ private:
     Rectangle *_bg;
     Vector2f _left_bottom, _right_top;
     int state;
-    int total_time;
+    int _total_time;
     bool _keys[NUM_KEYS];
     int num_active_bricks;
+    int _best_time;
 
     void update_state();
 
     void draw_scoreboard();
 
     void free_all();
+
+    void read_best_time();
+
+    void write_best_time();
 public:
     Game();
 

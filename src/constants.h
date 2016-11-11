@@ -16,7 +16,7 @@ enum{
 
 // constants for bricks
 const float BRICK_WIDTH = 0.3, BRICK_HEIGHT = 0.1;
-const float ROWS = 5, COLUMNS = 7;
+const float ROWS = 1, COLUMNS = 7;
 const float GAP = 0.006;
 
 // constants for ball
@@ -37,10 +37,12 @@ enum {
 // constants for font
 const float FONT_SCALING_FACTOR = 1.0f/1000;
 const float FONT_WIDTH = 104.76f;
+const float FONT_HEIGHT = 119.05f;
 const float TEXT_R = 0.0f, TEXT_G = 0.0f, TEXT_B = 0.0f;
 
 // constants for resources dir
 const std::string RES_DIR = "assets/textures/";
+const std::string DATA_DIR = "data/";
 
 // constants for image sizes
 const int BG_WIDTH = 500, BG_HEIGHT = 300;
