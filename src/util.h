@@ -6,6 +6,7 @@
 #define BREAK_THE_BRICKS_UTIL_H
 
 #include <algorithm>
+#include <GL/gl.h>
 
 class Vector2f {
 private:
@@ -34,6 +35,25 @@ public:
     Vector2f reflect(Vector2f normal);
 
     Vector2f clamp(Vector2f min, Vector2f max);
+};
+
+
+class Texture{
+private:
+    GLuint _id;
+    int _width, _height;
+    std::string _filename;
+    bool _loaded;
+public:
+    Texture();
+
+    Texture(std::string filename, int width, int height);
+
+    GLuint load_texture();
+
+    inline bool is_loaded(){ return _loaded; }
+
+    inline GLuint get_id(){ return _id; }
 };
 
 

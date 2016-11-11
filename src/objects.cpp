@@ -14,12 +14,16 @@ using namespace std;
 // Definitions for GameObject
 GameObject::GameObject(Vector2f pos) {
     _pos = pos;
+    _texture = nullptr;
 }
 
 Vector2f *GameObject::get_collision_normal(Ball &ball) {
     return nullptr;
 }
 
+void GameObject::set_texture(Texture *texture) {
+    _texture = texture;
+}
 
 // Definitions for Rectangle
 Rectangle::Rectangle(Vector2f pos, Vector2f size) : GameObject(pos) {
@@ -27,12 +31,32 @@ Rectangle::Rectangle(Vector2f pos, Vector2f size) : GameObject(pos) {
 }
 
 void Rectangle::draw() {
-    glRectf(
-            _pos.get_x() - _size.get_x() / 2,
-            _pos.get_y() - _size.get_y() / 2,
-            _pos.get_x() + _size.get_x() / 2,
-            _pos.get_y() + _size.get_y() / 2
-    );
+    glPushMatrix();
+    if (_texture && _texture->is_loaded()){
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, _texture->get_id());
+
+        glBegin(GL_QUADS);
+            glTexCoord2f(0.0, 0.0);
+            glVertex2f(_pos.get_x() - _size.get_x()/2, _pos.get_y() + _size.get_y()/2);
+            glTexCoord2f(1.0, 0);
+            glVertex2f(_pos.get_x() + _size.get_x()/2, _pos.get_y() + _size.get_y()/2);
+            glTexCoord2f(1.0, 1.0);
+            glVertex2f(_pos.get_x() + _size.get_x()/2, _pos.get_y() - _size.get_y()/2);
+            glTexCoord2f(0.0, 1.0);
+            glVertex2f(_pos.get_x() - _size.get_x()/2, _pos.get_y() - _size.get_y()/2);
+        glEnd();
+
+        glDisable(GL_TEXTURE_2D);
+    }else{
+        glRectf(
+                _pos.get_x() - _size.get_x() / 2,
+                _pos.get_y() - _size.get_y() / 2,
+                _pos.get_x() + _size.get_x() / 2,
+                _pos.get_y() + _size.get_y() / 2
+        );
+    }
+    glPopMatrix();
 }
 
 void Rectangle::update(Vector2f left_bottom, Vector2f right_top, bool *keys) {}
@@ -121,6 +145,13 @@ Ball::Ball(Vector2f pos, float radius, float speed) : GameObject(pos) {
 void Ball::draw() {
     glPushMatrix();
 
+    bool draw_texture = _texture && _texture->is_loaded();
+
+    if (draw_texture) {
+        glEnable(GL_TEXTURE_2D);
+        glBindTexture(GL_TEXTURE_2D, _texture->get_id());
+    }
+
     glTranslatef(_pos.get_x(), _pos.get_y(), 0.0f);
 
     glBegin(GL_TRIANGLE_FAN);
@@ -129,9 +160,15 @@ void Ball::draw() {
     GLfloat angle;
     for (int i = 0; i <= numSegments; i++) { // Last vertex same as first vertex
         angle = i * 2.0f * PI / numSegments;  // 360 deg for all segments
+        if(draw_texture)
+            glTexCoord2f(cosf(angle) * 0.5f + 0.5f, sinf(angle) * 0.5f + 0.5f);
         glVertex2f(cosf(angle) * _radius, sinf(angle) * _radius);
     }
     glEnd();
+
+    if (draw_texture) {
+        glDisable(GL_TEXTURE_2D);
+    }
 
     glPopMatrix();
 }

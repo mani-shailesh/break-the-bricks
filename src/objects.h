@@ -13,12 +13,16 @@ class Ball;
 class GameObject {
 protected:
     Vector2f _pos;
+
+    Texture *_texture;
 public:
     GameObject(Vector2f pos);
 
     inline Vector2f get_pos() { return _pos; };
 
     virtual void draw() = 0;
+
+    void set_texture(Texture *texture);
 
     virtual void update(Vector2f left_bottom, Vector2f right_top, bool *keys) = 0;
 

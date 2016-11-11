@@ -9,7 +9,6 @@
 #define WINDOW_TITLE "Break the Bricks"
 
 
-
 // variables for game window
 int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
 int WINDOW_POS_X = 100, WINDOW_POS_Y = 100;

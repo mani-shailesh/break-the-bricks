@@ -22,31 +22,53 @@ void Game::reshape(Vector2f left_bottom, Vector2f right_top) {
 }
 
 Game::~Game() {
-    vector<GameObject *>::iterator it;
-    for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
-        delete (*it);
-    }
-    delete (_ball);
+    free_all();
 }
 
 void Game::reset() {
+    free_all();
+    setup();
+    total_time = 0;
+    num_active_bricks = 0;
+}
+
+void Game::free_all(){
+    if(_bg)
+        delete(_bg);
     while (_game_objects.size() > 0) {
         GameObject *gameObject = _game_objects.back();
         _game_objects.pop_back();
         delete (gameObject);
     }
-    delete (_ball);
-
-    setup();
-    total_time = 0;
+    while (_textures.size() > 0) {
+        Texture *texture = _textures.back();
+        _textures.pop_back();
+        delete (texture);
+    }
+    if(_ball)
+        delete (_ball);
 }
 
 void Game::setup() {
+
+    // Add background to the scene
+    Texture *bg_texture = new Texture(RES_DIR + "bg.bmp", 500, 300);
+    bg_texture->load_texture();
+    _textures.push_back(bg_texture);
+
+    Vector2f background_pos = (_left_bottom + _right_top) * 0.5;
+    Vector2f background_size = _right_top - _left_bottom;
+    _bg = new Rectangle(background_pos, background_size);
+    _bg->set_texture(bg_texture);
 
     // Adding bricks to the scene
     Vector2f init_pos(_left_bottom.get_x(), _right_top.get_y() / 2);
 
     Vector2f size(BRICK_WIDTH, BRICK_HEIGHT);
+
+    Texture *brick_texture = new Texture(RES_DIR + "brick.bmp", 300, 100);
+    brick_texture->load_texture();
+    _textures.push_back(brick_texture);
 
     for (int ii = 0; ii < ROWS; ii++) {
         Vector2f pos;
@@ -56,20 +78,33 @@ void Game::setup() {
             pos = Vector2f(0, ii * (BRICK_HEIGHT + GAP));
 
         for (int jj = 0; jj < COLUMNS; jj++) {
-            _game_objects.push_back(new Brick(init_pos + pos, size));
+            Brick *brick = new Brick(init_pos + pos, size);
+            brick->set_texture(brick_texture);
+            _game_objects.push_back(brick);
             num_active_bricks ++;
             pos = pos + Vector2f(BRICK_WIDTH + GAP, 0);
         }
     }
 
     // Adding platform to the scene
+    Texture *platform_texture = new Texture(RES_DIR + "ball.bmp", 300, 300);
+    platform_texture->load_texture();
+    _textures.push_back(platform_texture);
+
     Vector2f platform_pos(0, _left_bottom.get_y() + PLATFORM_HEIGHT / 2);
     Vector2f platform_size(PLATFORM_WIDTH, PLATFORM_HEIGHT);
-    _game_objects.push_back(new Platform(platform_pos, platform_size, PLATFORM_SPEED));
+    Platform *platform = new Platform(platform_pos, platform_size, PLATFORM_SPEED);
+    platform->set_texture(platform_texture);
+    _game_objects.push_back(platform);
 
     // Adding ball to the scene
+    Texture *ball_texture = new Texture(RES_DIR + "ball.bmp", 300, 300);
+    ball_texture->load_texture();
+    _textures.push_back(ball_texture);
+
     Vector2f pos(0, platform_pos.get_y() + PLATFORM_HEIGHT / 2 + RADIUS);
     _ball = new Ball(pos, RADIUS, BALL_SPEED);
+    _ball->set_texture(ball_texture);
 }
 
 void Game::update() {
@@ -95,6 +130,8 @@ void Game::update() {
 }
 
 void Game::draw() {
+    _bg->draw();
+
     vector<GameObject *>::iterator it;
     for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
         (*it)->draw();

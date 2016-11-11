@@ -13,7 +13,9 @@
 class Game {
 private:
     std::vector<GameObject *> _game_objects;
+    std::vector<Texture *> _textures;
     Ball *_ball;
+    Rectangle *_bg;
     Vector2f _left_bottom, _right_top;
     int state;
     int total_time;
@@ -23,6 +25,8 @@ private:
     void update_state();
 
     void draw_scoreboard();
+
+    void free_all();
 public:
     Game();
 
