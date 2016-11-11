@@ -85,6 +85,7 @@ int main(int argc, char **argv) {
 
     glutKeyboardFunc(keyboard);
     glutSpecialFunc(keyboard_special);
+//    glutFullScreen();
 
     init();
 

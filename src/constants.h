@@ -11,7 +11,7 @@ const float ROWS = 5, COLUMNS = 7;
 const float GAP = 0.006;
 
 // constants for ball
-const float RADIUS = 0.05;
+const float RADIUS = 0.04;
 const float BALL_SPEED = 0.04;
 
 // constants for platform
