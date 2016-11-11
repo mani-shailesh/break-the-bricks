@@ -222,10 +222,14 @@ void Game::draw_scoreboard() {
 
     glPushMatrix();
 
+    glColor3f(TEXT_R, TEXT_G, TEXT_B);
+
+    glPushMatrix();
+
     glTranslatef(_left_bottom.get_x(), 0, 0);
     glScalef(FONT_SCALING_FACTOR, FONT_SCALING_FACTOR, FONT_SCALING_FACTOR);
 
-    for(int i=0; i<left_text.size(); i++)
+    for (int i = 0; i < left_text.size(); i++)
         glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, left_text[i]);
 
     glPopMatrix();
@@ -235,8 +239,12 @@ void Game::draw_scoreboard() {
     glTranslatef(_right_top.get_x() - right_text.size() * FONT_WIDTH * FONT_SCALING_FACTOR, 0, 0);
     glScalef(FONT_SCALING_FACTOR, FONT_SCALING_FACTOR, FONT_SCALING_FACTOR);
 
-    for(int i=0; i<right_text.size(); i++)
+    for (int i = 0; i < right_text.size(); i++)
         glutStrokeCharacter(GLUT_STROKE_MONO_ROMAN, right_text[i]);
+
+    glPopMatrix();
+
+    glColor3f(1, 1, 1);
 
     glPopMatrix();
 }
