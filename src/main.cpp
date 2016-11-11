@@ -10,9 +10,13 @@
 
 
 // constants for game window
-const int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
-
 int const REFRESH_MILLI_SEC = 30;
+
+// variables for game window
+int WINDOW_WIDTH = 500, WINDOW_HEIGHT = 500;
+int WINDOW_POS_X = 100, WINDOW_POS_Y = 100;
+
+bool fullscreen = false;
 
 Game game;
 
@@ -65,7 +69,27 @@ void Timer(int value) {
 
 void keyboard(unsigned char key, int x, int y) {
     game.key_pressed(key);
+    switch (key) {
+        case 'f':
+        case 'F':
+            // Ref : https://www3.ntu.edu.sg/home/ehchua/programming/opengl/CG_Introduction.html
+            fullscreen = !fullscreen;         // Toggle state
+            if (fullscreen) {                     // Full-screen mode
+                WINDOW_POS_X   = glutGet(GLUT_WINDOW_X); // Save parameters for restoring later
+                WINDOW_POS_Y   = glutGet(GLUT_WINDOW_Y);
+                WINDOW_WIDTH  = glutGet(GLUT_WINDOW_WIDTH);
+                WINDOW_HEIGHT = glutGet(GLUT_WINDOW_HEIGHT);
+                glutFullScreen();                      // Switch into full screen
+            } else {                                         // Windowed mode
+                glutReshapeWindow(WINDOW_WIDTH, WINDOW_HEIGHT); // Switch into windowed mode
+                glutPositionWindow(WINDOW_POS_X, WINDOW_POS_Y);   // Position top-left corner
+            }
+            break;
+        default:
+            break;
+    }
 }
+
 
 void keyboard_special(int key, int x, int y) {
     game.key_pressed(key);
@@ -76,7 +100,7 @@ int main(int argc, char **argv) {
     glutInitDisplayMode(GLUT_DOUBLE);
 
     glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
-    glutInitWindowPosition(100, 100);
+    glutInitWindowPosition(WINDOW_POS_X, WINDOW_POS_Y);
     glutCreateWindow(WINDOW_TITLE);
 
     glutDisplayFunc(display);
