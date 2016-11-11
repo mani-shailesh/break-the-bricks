@@ -27,9 +27,9 @@ Game::~Game() {
 
 void Game::reset() {
     free_all();
+    num_active_bricks = 0;
     setup();
     total_time = 0;
-    num_active_bricks = 0;
 }
 
 void Game::free_all(){
