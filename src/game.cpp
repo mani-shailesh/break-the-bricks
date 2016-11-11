@@ -5,6 +5,7 @@
 #include <GL/glut.h>
 #include <iostream>
 #include <fstream>
+#include <sys/stat.h>
 #include "game.h"
 
 using namespace std;
@@ -309,6 +310,22 @@ void Game::read_best_time() {
 */
 void Game::write_best_time() {
     string file_name = DATA_DIR + "scores.bin";
+
+    struct stat info;
+
+    if (stat(file_name.c_str(), &info) != 0) {
+        mode_t n_mode = 0733; // UNIX style permissions
+        int n_error = 0;
+#if defined(_WIN32)
+        n_error = _mkdir(DATA_DIR.c_str()); // can be used on Windows
+#else
+        n_error = mkdir(DATA_DIR.c_str(), n_mode); // can be used on non-Windows
+#endif
+        if (n_error != 0) {
+            cerr << "Can not create directory!";
+        }
+    }
+
 
     ofstream out_file;
     out_file.open(file_name.c_str(), ios_base::app);

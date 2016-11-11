@@ -16,7 +16,7 @@ enum{
 
 // constants for bricks
 const float BRICK_WIDTH = 0.3, BRICK_HEIGHT = 0.1;
-const float ROWS = 1, COLUMNS = 7;
+const float ROWS = 5, COLUMNS = 7;
 const float GAP = 0.006;
 
 // constants for ball
