@@ -37,7 +37,7 @@ enum {
 // constants for font
 const float FONT_SCALING_FACTOR = 1.0f/1000;
 const float FONT_WIDTH = 104.76f;
-const float TEXT_R = 1.0f, TEXT_G = 1.0f, TEXT_B = 1.0f;
+const float TEXT_R = 0.0f, TEXT_G = 0.0f, TEXT_B = 0.0f;
 
 // constants for resources dir
 const std::string RES_DIR = "assets/textures/";

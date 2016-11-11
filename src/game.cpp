@@ -87,7 +87,7 @@ void Game::setup() {
     }
 
     // Adding platform to the scene
-    Texture *platform_texture = new Texture(RES_DIR + "platform.bmp", RECT_WIDTH, RECT_HEIGHT);
+    Texture *platform_texture = new Texture(RES_DIR + "ball.bmp", RECT_WIDTH, RECT_HEIGHT);
     platform_texture->load_texture();
     _textures.push_back(platform_texture);
 
