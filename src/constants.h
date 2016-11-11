@@ -41,4 +41,9 @@ const float FONT_WIDTH = 104.76f;
 // constants for resources dir
 const std::string RES_DIR = "assets/textures/";
 
+// constants for image sizes
+const int BG_WIDTH = 500, BG_HEIGHT = 300;
+const int BALL_WIDTH = 300, BALL_HEIGHT = 300;
+const int RECT_WIDTH = 300, RECT_HEIGHT = 100;
+
 #endif //BREAK_THE_BRICKS_CONSTANTS_H

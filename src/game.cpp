@@ -52,7 +52,7 @@ void Game::free_all(){
 void Game::setup() {
 
     // Add background to the scene
-    Texture *bg_texture = new Texture(RES_DIR + "bg.bmp", 500, 300);
+    Texture *bg_texture = new Texture(RES_DIR + "bg.bmp", BG_WIDTH, BG_HEIGHT);
     bg_texture->load_texture();
     _textures.push_back(bg_texture);
 
@@ -66,7 +66,7 @@ void Game::setup() {
 
     Vector2f size(BRICK_WIDTH, BRICK_HEIGHT);
 
-    Texture *brick_texture = new Texture(RES_DIR + "brick.bmp", 300, 100);
+    Texture *brick_texture = new Texture(RES_DIR + "brick.bmp", RECT_WIDTH, RECT_HEIGHT);
     brick_texture->load_texture();
     _textures.push_back(brick_texture);
 
@@ -87,7 +87,7 @@ void Game::setup() {
     }
 
     // Adding platform to the scene
-    Texture *platform_texture = new Texture(RES_DIR + "ball.bmp", 300, 300);
+    Texture *platform_texture = new Texture(RES_DIR + "platform.bmp", RECT_WIDTH, RECT_HEIGHT);
     platform_texture->load_texture();
     _textures.push_back(platform_texture);
 
@@ -98,7 +98,7 @@ void Game::setup() {
     _game_objects.push_back(platform);
 
     // Adding ball to the scene
-    Texture *ball_texture = new Texture(RES_DIR + "ball.bmp", 300, 300);
+    Texture *ball_texture = new Texture(RES_DIR + "ball.bmp", BALL_WIDTH, BALL_HEIGHT);
     ball_texture->load_texture();
     _textures.push_back(ball_texture);
 
