@@ -124,7 +124,7 @@ void Ball::draw() {
 
     glBegin(GL_TRIANGLE_FAN);
     glVertex2f(0, 0);       // Center of circle
-    int numSegments = 100;
+    int numSegments = 500;
     GLfloat angle;
     for (int i = 0; i <= numSegments; i++) { // Last vertex same as first vertex
         angle = i * 2.0f * PI / numSegments;  // 360 deg for all segments

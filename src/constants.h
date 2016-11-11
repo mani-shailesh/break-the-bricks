@@ -5,6 +5,11 @@
 #ifndef BREAK_THE_BRICKS_CONSTANTS_H
 #define BREAK_THE_BRICKS_CONSTANTS_H
 
+// constants for game
+enum{
+    ACTIVE, PAUSED, LOST, WON
+};
+
 // constants for bricks
 const float BRICK_WIDTH = 0.3, BRICK_HEIGHT = 0.1;
 const float ROWS = 5, COLUMNS = 7;

@@ -15,10 +15,10 @@ private:
     std::vector<GameObject *> _game_objects;
     Ball *_ball;
     Vector2f _left_bottom, _right_top;
-    bool _paused;
+    int state;
     bool _keys[NUM_KEYS];
 
-    bool is_over();
+    void update_state();
 public:
     Game();
 
@@ -31,8 +31,6 @@ public:
     void update();
 
     void draw();
-
-    void toggle_pause();
 
     void key_pressed(int key);
 

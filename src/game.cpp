@@ -8,7 +8,7 @@
 using namespace std;
 
 Game::Game() {
-    _paused = true;
+    state = ACTIVE;
     _left_bottom = Vector2f(-1, -1);
     _right_top = Vector2f(1, 1);
 }
@@ -27,7 +27,6 @@ Game::~Game() {
 }
 
 void Game::reset() {
-    _paused = true;
     while (_game_objects.size() > 0) {
         GameObject *gameObject = _game_objects.back();
         _game_objects.pop_back();
@@ -69,19 +68,24 @@ void Game::setup() {
 }
 
 void Game::update() {
-    if (_paused)
-        return;
-    if (is_over()) {
-        reset();
-        return;
-    }
+    update_state();
     vector<GameObject *>::iterator it;
-    for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
-        (*it)->update(_left_bottom, _right_top, _keys);
-    }
+    switch(state){
+        case ACTIVE:
+            for (it = _game_objects.begin(); it != _game_objects.end(); it++) {
+                (*it)->update(_left_bottom, _right_top, _keys);
+            }
 
-    _ball->check_collisions(_game_objects);
-    _ball->update(_left_bottom, _right_top, _keys);
+            _ball->check_collisions(_game_objects);
+            _ball->update(_left_bottom, _right_top, _keys);
+            break;
+        case WON:
+            break;
+        case LOST:
+            break;
+        default:
+            break;
+    }
 }
 
 void Game::draw() {
@@ -90,10 +94,6 @@ void Game::draw() {
         (*it)->draw();
     }
     _ball->draw();
-}
-
-void Game::toggle_pause() {
-    _paused = !_paused;
 }
 
 void Game::key_pressed(int key) {
@@ -105,12 +105,16 @@ void Game::key_pressed(int key) {
             _keys[RIGHT_KEY] = true;
             break;
         case ' ':
-            toggle_pause();
+            if(state != ACTIVE)
+                state = ACTIVE;
+            else
+                state = PAUSED;
             break;
         case 'r':
         case 'R':
             if (_keys[RESET_KEY]) {
                 reset();
+                state = PAUSED;
                 _keys[RESET_KEY] = false;
             } else {
                 _keys[RESET_KEY] = true;
@@ -124,7 +128,11 @@ void Game::key_pressed(int key) {
         _keys[RESET_KEY] = false;
 }
 
-bool Game::is_over() {
+void Game::update_state(){
+    if(_game_objects.size() == 1)   // only platform remains
+        state = WON;
+
     Vector2f ball_pos = _ball->get_pos();
-    return (ball_pos.get_y() < _left_bottom.get_y() + PLATFORM_HEIGHT);
+    if(ball_pos.get_y() < _left_bottom.get_y() + PLATFORM_HEIGHT)
+        state = LOST;
 }
