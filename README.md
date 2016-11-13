@@ -1,4 +1,7 @@
-# break-the-bricks
+# Break the Bricks
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/mani-shailesh/break-the-bricks/blob/master/LICENSE.md) [![Category](https://img.shields.io/badge/Category-Coursework-ff69b4.svg)](https://github.com/mani-shailesh/break-the-bricks)  
+
+## Description
 Traditional 'Break the Bricks' game implemented using OpenGL
 
 ## Build instructions
