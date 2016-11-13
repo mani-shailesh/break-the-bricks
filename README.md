@@ -1,5 +1,7 @@
 # Break the Bricks
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/mani-shailesh/break-the-bricks/blob/master/LICENSE.md) [![Category](https://img.shields.io/badge/Category-Coursework-ff69b4.svg)](https://github.com/mani-shailesh/break-the-bricks)  
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://github.com/mani-shailesh/break-the-bricks/blob/master/LICENSE.md)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/f2d2879819fa40688154d9fe5829e058)](https://www.codacy.com/app/shailesh-pandey/break-the-bricks?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=mani-shailesh/break-the-bricks&amp;utm_campaign=Badge_Grade)
+[![Category](https://img.shields.io/badge/Category-Coursework-ff69b4.svg)](https://github.com/mani-shailesh/break-the-bricks)  
 
 ## Description
 Traditional 'Break the Bricks' game implemented using OpenGL
