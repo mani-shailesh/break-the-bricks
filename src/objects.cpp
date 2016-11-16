@@ -133,8 +133,9 @@ Vector2f *Platform::get_collision_normal(Ball &ball) {
         Vector2f velocity = ball.get_velocity();
         float speed = velocity.norm();
         velocity.normalize();
-        Vector2f new_velocity(velocity.get_x() + distance_x * speed, abs(velocity.get_y()));
+        Vector2f new_velocity(velocity.get_x() + distance_x * speed, velocity.get_y());
         ball.set_velocity_dir(new_velocity);
+        return normal;
     }
     return 0;
 }
