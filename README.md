@@ -6,12 +6,6 @@
 ## Description
 Traditional 'Break the Bricks' game implemented using OpenGL
 
-## Build instructions
-cd into the directory containing this file.
-This directory should also contain src/ makefile and assets/
-
-To run the program, type 'make' in the terminal.
-
 ## Game Description and Rules
 
 The basic gameplay of 'Break the Bricks' involves the following key rules/steps:  
